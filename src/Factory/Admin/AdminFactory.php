@@ -34,7 +34,6 @@ final class AdminFactory extends PersistentProxyObjectFactory
     {
         return [
             'name' => self::faker()->firstName('male') . ' ' . self::faker()->lastName('male'),
-            'password' => null,
             'username' => self::faker()->username(255),
         ];
     }

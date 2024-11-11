@@ -34,6 +34,7 @@ stop-prod:
 data-dev:
 	yes | php bin/console doctrine:database:drop --force && \
 	php bin/console doctrine:database:create && \
+	cd migrations && rm -rf *.php && cd .. && \
 	php bin/console doctrine:migrations:diff && \
 	yes | php bin/console doctrine:migrations:migrate && \
 	yes | php bin/console doctrine:fixtures:load
