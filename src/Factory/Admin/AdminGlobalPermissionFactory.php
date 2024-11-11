@@ -3,7 +3,6 @@
 namespace App\Factory\Admin;
 
 use App\Enum\Admin\PermissionScope;
-use App\Factory\Traits\RandomEntityTrait;
 use App\Repository\Admin\AdminRepository;
 use App\Entity\Admin\AdminGlobalPermissions;
 use App\Repository\Admin\AdminRoleRepository;
@@ -14,8 +13,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class AdminGlobalPermissionFactory extends PersistentProxyObjectFactory
 {
-    use RandomEntityTrait;
-
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -40,7 +37,7 @@ final class AdminGlobalPermissionFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'admin' => $this->getRandomEntity($this->adminRepository),
+            'admin' => AdminFactory::random(),
             'role' => self::faker()->randomElement($this->adminRoleRepository->findBy(['scope' => PermissionScope::GLOBAL])),
         ];
     }

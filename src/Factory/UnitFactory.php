@@ -4,7 +4,6 @@ namespace App\Factory;
 
 use App\Entity\Unit;
 use App\Repository\IndividualRepository;
-use App\Factory\Traits\RandomEntityTrait;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
@@ -12,8 +11,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class UnitFactory extends PersistentProxyObjectFactory
 {
-    use RandomEntityTrait;
-
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *

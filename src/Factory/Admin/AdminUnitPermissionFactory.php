@@ -5,7 +5,7 @@ namespace App\Factory\Admin;
 use App\Repository\UnitRepository;
 use App\Enum\Admin\PermissionScope;
 use App\Entity\Admin\AdminUnitPermission;
-use App\Factory\Traits\RandomEntityTrait;
+use App\Factory\UnitFactory;
 use App\Repository\Admin\AdminRepository;
 use App\Repository\Admin\AdminRoleRepository;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
@@ -15,8 +15,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class AdminUnitPermissionFactory extends PersistentProxyObjectFactory
 {
-    use RandomEntityTrait;
-
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -42,9 +40,9 @@ final class AdminUnitPermissionFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'admin' => $this->getRandomEntity($this->adminRepository),
+            'admin' => AdminFactory::random(),
             'role' => self::faker()->randomElement($this->adminRoleRepository->findBy(['scope' => PermissionScope::UNIT])),
-            'unit' => $this->getRandomEntity($this->unitRepository),
+            'unit' => UnitFactory::random(),
         ];
     }
 

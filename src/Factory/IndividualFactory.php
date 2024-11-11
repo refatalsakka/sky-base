@@ -7,7 +7,6 @@ use App\Entity\MilitaryRank;
 use App\Repository\UnitRepository;
 use App\Repository\ReligionRepository;
 use App\Repository\BloodTypeRepository;
-use App\Factory\Traits\RandomEntityTrait;
 use App\Repository\MilitaryRankRepository;
 use App\Repository\SocialStatusRepository;
 use App\Repository\EducationLevelRepository;
@@ -20,8 +19,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class IndividualFactory extends PersistentProxyObjectFactory
 {
-    use RandomEntityTrait;
-
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -52,14 +49,14 @@ final class IndividualFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         /** @var MilitaryRank */
-        $MilitaryRankEntity = $this->getRandomEntity($this->militaryRankRepository);
+        $MilitaryRankEntity = MilitaryRankFactory::random();
 
         return [
             'address' => self::faker()->address(),
             'birthdate' => self::faker()->dateTimeBetween('-60 years', '-18 years'),
-            'bloodType' => $this->getRandomEntity($this->bloodTypeRepository),
+            'bloodType' => BloodTypeFactory::random(),
             'detentionTimes' => self::faker()->numberBetween(0, 5),
-            'educationLevel' => $this->getRandomEntity($this->educationLevelRepository),
+            'educationLevel' => EducationLevelFactory::random(),
             'fatherAlive' => self::faker()->boolean(),
             'image' => self::faker()->imageUrl(640, 480, 'people'),
             'imprisonmentTimes' => self::faker()->numberBetween(0, 2),
@@ -88,8 +85,8 @@ final class IndividualFactory extends PersistentProxyObjectFactory
             ]),
             'registerDate' => self::faker()->dateTimeBetween('-30 years', 'now'),
             'releaseDate' => self::faker()->dateTimeBetween('now', '+2 years'),
-            'religion' => $this->getRandomEntity($this->religionRepository),
-            'socialStatus' => $this->getRandomEntity($this->socialStatusRepository),
+            'religion' => ReligionFactory::random(),
+            'socialStatus' => SocialStatusFactory::random(),
             'specialization' => self::faker()->randomElement([
                 'المشاة', 
                 'اللوجستيات', 
@@ -102,9 +99,9 @@ final class IndividualFactory extends PersistentProxyObjectFactory
                 'الوحدات المدرعة', 
                 'سلاح الإشارة'
             ]),
-            'status' => $this->getRandomEntity($this->individualStatusRepository),
-            'task' => $this->getRandomEntity($this->individualTaskRepository),
-            'unit' => $this->getRandomEntity($this->unitRepository),
+            'status' => IndividualStatusFactory::random(),
+            'task' => IndividualTaskFactory::random(),
+            'unit' => UnitFactory::random(),
         ];
     }
 

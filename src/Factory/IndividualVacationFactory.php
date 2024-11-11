@@ -4,7 +4,6 @@ namespace App\Factory;
 
 use App\Entity\IndividualVacation;
 use App\Repository\IndividualRepository;
-use App\Factory\Traits\RandomEntityTrait;
 use App\Repository\IndividualLeaveReasonRepository;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
@@ -13,8 +12,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class IndividualVacationFactory extends PersistentProxyObjectFactory
 {
-    use RandomEntityTrait;
-
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -40,8 +37,8 @@ final class IndividualVacationFactory extends PersistentProxyObjectFactory
     {
         return [
             'endDate' => self::faker()->dateTime(),
-            'individual' => $this->getRandomEntity($this->individualRepository),
-            'reason' => $this->getRandomEntity($this->individualLeaveReasonRepository),
+            'individual' => IndividualFactory::random(),
+            'reason' => IndividualLeaveReasonFactory::random(),
             'startDate' => self::faker()->dateTime(),
         ];
     }
