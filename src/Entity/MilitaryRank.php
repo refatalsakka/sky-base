@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: MilitaryRankRepository::class)]
 #[ApiResource(
     operations: [
-        new GetCollection(),
+        new GetCollection(normalizationContext: ['groups' => 'militaryRank:collection']),
     ],
     order: ['rank' => 'ASC'],
     paginationEnabled: false,
@@ -27,13 +27,13 @@ class MilitaryRank
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['militaryRank:collection', 'individual:collection', 'individual:read', 'unit:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['militaryRank:collection', 'individual:collection', 'individual:read', 'unit:read'])]
     private ?string $rank = null;
 
     /**

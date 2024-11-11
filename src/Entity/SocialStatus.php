@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Individual;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\SocialStatusRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,6 +15,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: SocialStatusRepository::class)]
 #[ApiResource(
+    operations: [
+        new GetCollection(normalizationContext: ['groups' => 'socialStatus:collection']),
+    ],
     order: ['status' => 'ASC'],
     paginationEnabled: false,
 )]
@@ -23,13 +27,13 @@ class SocialStatus
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['individual:read', 'individual:collection'])]
+    #[Groups(['socialStatus:collection', 'individual:collection', 'individual:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection'])]
+    #[Groups(['socialStatus:collection', 'individual:collection', 'individual:read'])]
     private ?string $status = null;
 
     /**

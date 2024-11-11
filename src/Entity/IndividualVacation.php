@@ -2,15 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\IndividualVacationRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IndividualVacationRepository::class)]
 #[ApiResource(
+    operations: [
+        new GetCollection(normalizationContext: ['groups' => 'individualVacation:collection']),
+        new Get(normalizationContext: ['groups' => 'individualVacation:read']),
+        new Post(),
+        new Put(),
+        new Delete()
+    ],
     order: ['startDate' => 'ASC'],
     paginationEnabled: false,
 )]
@@ -24,25 +36,25 @@ class IndividualVacation
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank()]
     #[Assert\Type('datetime')]
-    #[Groups(['individual:read', 'individual:collection'])]
+    #[Groups(['individualVacation:collection', 'individualVacation:read', 'individual:collection', 'individual:read'])]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank()]
     #[Assert\Type('datetime')]
-    #[Groups(['individual:read', 'individual:collection'])]
+    #[Groups(['individualVacation:collection', 'individualVacation:read', 'individual:collection', 'individual:read'])]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'individualVacations')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read'])]
+    #[Groups(['individualVacation:collection', 'individualVacation:read', 'individual:collection', 'individual:read'])]
     private ?IndividualLeaveReason $reason = null;
 
     #[ORM\ManyToOne(inversedBy: 'individualVacations')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['individual:read'])]
+    #[Groups(['individualVacation:collection', 'individualVacation:read'])]
     private ?Individual $individual = null;
 
     public function getId(): ?int

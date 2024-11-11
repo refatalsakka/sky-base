@@ -3,8 +3,13 @@
 namespace App\Entity;
 
 use App\Entity\Individual;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\EducationLevelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,6 +19,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: EducationLevelRepository::class)]
 #[ApiResource(
+    operations: [
+        new GetCollection(normalizationContext: ['groups' => 'educationLevel:collection']),
+    ],
     order: ['level' => 'ASC'],
     paginationEnabled: false,
 )]
@@ -23,13 +31,13 @@ class EducationLevel
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['individual:read', 'individual:collection'])]
+    #[Groups(['educationLevel:collection', 'individual:collection', 'individual:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection'])]
+    #[Groups(['educationLevel:collection', 'individual:collection', 'individual:read'])]
     private ?string $level = null;
 
     /**
