@@ -1,0 +1,6 @@
+social_statuses:
+  - "أعزب"  # Single
+  - "متزوج"  # Married
+  - "مطلق"  # Divorced
+  - "أرمل"  # Widowed
+  - "منفصل"  # Separated

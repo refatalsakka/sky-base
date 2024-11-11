@@ -1,0 +1,17 @@
+services:
+  apache:
+    build:
+      dockerfile: docker/Dockerfile.dev.apache
+    volumes:
+      - ./src:/var/www/html/src
+      - ./bin:/var/www/html/bin
+      - ./migrations:/var/www/html/migrations
+      - ./config:/var/www/html/config
+      - ./public:/var/www/html/public
+      - ./data:/var/www/html/data
+      - ./var:/var/www/html/var
+      - ./resources:/var/www/html/resources
+      - ./templates:/var/www/html/templates
+      - ./.env:/var/www/html/.env
+      - ./.env.dev:/var/www/html/.env.dev
+      - ./.env.prod:/var/www/html/.env.prod

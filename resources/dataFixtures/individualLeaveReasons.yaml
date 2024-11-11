@@ -1,0 +1,14 @@
+individual_leave_reasons:
+  - "إنهاء فترة الخدمة الإلزامية"  # Completion of Mandatory Military Service
+  - "إعفاء طبي"  # Medical Discharge
+  - "أسباب عائلية طارئة"  # Emergency Family Reasons
+  - "حالة وفاة أحد الأقارب من الدرجة الأولى"  # Death of a First-Degree Relative
+  - "إجازة مرضية طويلة الأمد"  # Extended Medical Leave
+  - "عدم الكفاءة أو سوء السلوك"  # Discharge for Inefficiency or Misconduct
+  - "إصابة خلال الخدمة"  # Injury During Service
+  - "استقالة"  # Resignation
+  - "قرار محكمة عسكرية"  # Military Court Decision
+  - "انتهاء عقد الخدمة الطوعية"  # End of Voluntary Service Contract
+  - "خدمة في الخارج أو انتداب دولي"  # Foreign Assignment or International Deployment
+  - "أسباب سياسية أو أمنية"  # Political or Security Reasons
+  - "طلب إجازة دراسية"  # Educational Leave

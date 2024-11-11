@@ -1,0 +1,7 @@
+education_levels:
+  - "رياض الأطفال"  # Kindergarten
+  - "المرحلة الابتدائية"  # Primary Education
+  - "المرحلة الإعدادية"  # Preparatory Education
+  - "المرحلة الثانوية"  # Secondary Education
+  - "التعليم العالي"  # Higher Education
+  - "الدراسات العليا"  # Postgraduate Studies

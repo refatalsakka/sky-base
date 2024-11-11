@@ -1,0 +1,9 @@
+individual_statuses:
+  - "موجود"  # Present
+  - "مأمورية"  # On Mission
+  - "إجازة"  # On Leave
+  - "مريض"  # Sick
+  - "موقوف"  # Suspended
+  - "منتدب"  # Seconded
+  - "متقاعد"  # Retired
+  - "متوفي"  # Deceased

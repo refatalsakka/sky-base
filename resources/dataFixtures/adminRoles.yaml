@@ -1,0 +1,30 @@
+global:
+  - read_admins
+  - create_admin
+  - edit_admin
+  - delete_admin
+
+  - create_unit
+
+  - read_global_permissions
+
+  - read_unit_permissions
+unit:
+  - read_unit
+  - edit_unit
+  - delete_unit
+
+  - read_unit_officers
+  - create_unit_officer
+  - edit_unit_officer
+  - delete_unit_officer
+
+  - read_unit_non_commissioned_officers
+  - create_unit_non_commissioned_officer
+  - edit_unit_non_commissioned_officer
+  - delete_unit_non_commissioned_officer
+
+  - read_unit_enlisted
+  - create_unit_enlisted
+  - edit_unit_enlisted
+  - delete_unit_enlisted

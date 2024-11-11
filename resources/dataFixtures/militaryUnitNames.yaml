@@ -1,0 +1,9 @@
+military_units:
+  - 'كتيبة المدرعات'    # Armored Battalion
+  - 'فوج المدفعية'      # Artillery Regiment
+  - 'وحدة الاستطلاع'    # Reconnaissance Unit
+  - 'كتيبة المشاة'      # Infantry Battalion
+  - 'وحدة المظلات'      # Paratrooper Unit
+  - 'وحدة الصاعقة'      # Commando Unit
+  - 'فوج الإمدادات'     # Supply Regiment
+  - 'كتيبة الدفاع الجوي' # Air Defense Battalion

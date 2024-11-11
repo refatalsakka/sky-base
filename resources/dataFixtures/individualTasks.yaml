@@ -1,0 +1,9 @@
+individual_tasks:
+  - "خدمة"  # Service
+  - "المجمع"  # Complex
+  - "متابعة"  # Follow-up
+  - "حراسة"  # Guard Duty
+  - "صيانة"  # Maintenance
+  - "تدريب"  # Training
+  - "إمداد"  # Supply Management
+  - "تخطيط"  # Planning
