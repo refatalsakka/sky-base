@@ -38,15 +38,15 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['admin:collection', 'admin:read'])]
+    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['admin:collection', 'admin:read'])]
+    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['admin:collection', 'admin:read'])]
+    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]

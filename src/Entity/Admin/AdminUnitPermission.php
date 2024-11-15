@@ -3,13 +3,23 @@
 namespace App\Entity\Admin;
 
 use App\Entity\Unit;
+use ApiPlatform\Metadata\Get;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\Admin\AdminUnitPermissionRepository;
 
 #[ORM\Entity(repositoryClass: AdminUnitPermissionRepository::class)]
 #[ApiResource(
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => 'adminUnitPermissions:collection'],
+        ),
+        new Get(
+            normalizationContext: ['groups' => 'adminUnitPermissions:read'],
+        ),
+    ],
     paginationEnabled: false,
 )]
 class AdminUnitPermission
