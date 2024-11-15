@@ -2,15 +2,27 @@
 
 namespace App\Entity\Admin;
 
-use App\Enum\Admin\PermissionScope;
+use ApiPlatform\Metadata\Get;
 use Doctrine\ORM\Mapping as ORM;
+use App\Enum\Admin\PermissionScope;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use App\Entity\Admin\AdminGlobalPermission;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\Admin\AdminRoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AdminRoleRepository::class)]
 #[ApiResource(
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => 'AdminRole:collection'],
+        ),
+        new Get(
+            normalizationContext: ['groups' => 'AdminRole:read'],
+        ),
+    ],
     paginationEnabled: false,
 )]
 class AdminRole
@@ -18,19 +30,22 @@ class AdminRole
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read'])]
     private ?string $name = null;
 
     #[ORM\Column(enumType: PermissionScope::class)]
+    #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read'])]
     private ?PermissionScope $scope = null;
 
     /**
-     * @var Collection<int, AdminGlobalPermissions>
+     * @var Collection<int, AdminGlobalPermission>
      */
-    #[ORM\OneToMany(targetEntity: AdminGlobalPermissions::class, mappedBy: 'role')]
-    private Collection $adminAdminGlobalPermissions;
+    #[ORM\OneToMany(targetEntity: AdminGlobalPermission::class, mappedBy: 'role')]
+    private Collection $adminGlobalPermissions;
 
     /**
      * @var Collection<int, AdminUnitPermission>
@@ -40,7 +55,7 @@ class AdminRole
 
     public function __construct()
     {
-        $this->adminAdminGlobalPermissions = new ArrayCollection();
+        $this->adminGlobalPermissions = new ArrayCollection();
         $this->adminUnitPermissions = new ArrayCollection();
     }
 
@@ -74,26 +89,26 @@ class AdminRole
     }
 
     /**
-     * @return Collection<int, AdminGlobalPermissions>
+     * @return Collection<int, AdminGlobalPermission>
      */
-    public function getAdminAdminGlobalPermissions(): Collection
+    public function getAdminGlobalPermission(): Collection
     {
-        return $this->adminAdminGlobalPermissions;
+        return $this->adminGlobalPermissions;
     }
 
-    public function addAdminGlobalPermissions(AdminGlobalPermissions $globalPermission): static
+    public function addAdminGlobalPermission(AdminGlobalPermission $globalPermission): static
     {
-        if (!$this->adminAdminGlobalPermissions->contains($globalPermission)) {
-            $this->adminAdminGlobalPermissions->add($globalPermission);
+        if (!$this->adminGlobalPermissions->contains($globalPermission)) {
+            $this->adminGlobalPermissions->add($globalPermission);
             $globalPermission->setRole($this);
         }
 
         return $this;
     }
 
-    public function removeAdminGlobalPermissions(AdminGlobalPermissions $globalPermission): static
+    public function removeAdminGlobalPermission(AdminGlobalPermission $globalPermission): static
     {
-        if ($this->adminAdminGlobalPermissions->removeElement($globalPermission)) {
+        if ($this->adminGlobalPermissions->removeElement($globalPermission)) {
             // set the owning side to null (unless already changed)
             if ($globalPermission->getRole() === $this) {
                 $globalPermission->setRole(null);

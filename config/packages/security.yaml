@@ -13,12 +13,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            stateless: true
             lazy: true
             provider: app_user_provider
             json_login:
                 check_path: app_login
                 username_path: username
                 password_path: password
+            logout:
+                path: app_logout
+            # access_token:
+            #     token_handler: App\Security\ApiTokenHandler
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -29,9 +34,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/api/v1/admins, roles: ROLE_VIEW, methods: ['GET'] }
+        # - { path: ^/api/v1/admins, roles: ROLE_EDIT, methods: ['POST', 'PUT'] }
+        # - { path: ^/api/v1/admins, roles: ROLE_DELETE, methods: ['DELETE'] }
 
+        # - { path: ^/api/v1/units, roles: ROLE_EDIT, methods: ['POST'] }
 when@test:
     security:
         password_hashers:

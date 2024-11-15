@@ -1,30 +1,20 @@
 global:
-  - read_admins
-  - create_admin
-  - edit_admin
-  - delete_admin
-
-  - create_unit
-
-  - read_global_permissions
-
-  - read_unit_permissions
+  - ROLE_VIEW
+  - ROLE_EDIT
+  - ROLE_DELETE
 unit:
-  - read_unit
-  - edit_unit
-  - delete_unit
+  - ROLE_VIEW_UNIT
+  - ROLE_EDIT_UNIT
+  - ROLE_DELETE_UNIT
 
-  - read_unit_officers
-  - create_unit_officer
-  - edit_unit_officer
-  - delete_unit_officer
+  - ROLE_VIEW_OFFICERS
+  - ROLE_EDIT_OFFICERS
+  - ROLE_DELETE_OFFICERS
 
-  - read_unit_non_commissioned_officers
-  - create_unit_non_commissioned_officer
-  - edit_unit_non_commissioned_officer
-  - delete_unit_non_commissioned_officer
+  - ROLE_VIEW_NON_COMMISSIONED_OFFICERS
+  - ROLE_EDIT_NON_COMMISSIONED_OFFICERS
+  - ROLE_DELETE_NON_COMMISSIONED_OFFICERS
 
-  - read_unit_enlisted
-  - create_unit_enlisted
-  - edit_unit_enlisted
-  - delete_unit_enlisted
+  - ROLE_VIEW_NON_COMMISSIONED_ENLISTED
+  - ROLE_EDIT_NON_COMMISSIONED_ENLISTED
+  - ROLE_DELETE_NON_COMMISSIONED_ENLISTED

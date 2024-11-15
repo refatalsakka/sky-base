@@ -56,19 +56,19 @@ class Unit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['unit:read', 'unit:collection', 'individual:read'])]
+    #[Groups(['unit:read', 'unit:collection', 'individual:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read', 'admin:collection', 'admin:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['unit:read', 'unit:collection', 'individual:read'])]
+    #[Groups(['unit:read', 'unit:collection', 'individual:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read', 'admin:collection', 'admin:read'])]
     private ?string $name = null;
 
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(['unit:read', 'unit:collection', ])]
+    #[Groups(['unit:read', 'unit:collection'])]
     private ?Individual $leader = null;
 
     /**

@@ -2,31 +2,26 @@
 
 namespace App\Factory\Admin;
 
-use App\Enum\Admin\PermissionScope;
-use App\Repository\Admin\AdminRepository;
-use App\Entity\Admin\AdminGlobalPermission;
-use App\Repository\Admin\AdminRoleRepository;
+use App\Entity\Admin\ApiToken;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<AdminGlobalPermission>
+ * @extends PersistentProxyObjectFactory<ApiToken>
  */
-final class AdminGlobalPermissionFactory extends PersistentProxyObjectFactory
+final class ApiTokenFactory extends PersistentProxyObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
      * @todo inject services if required
      */
-    public function __construct(
-        private AdminRepository $adminRepository,
-        private AdminRoleRepository $adminRoleRepository,
-    ) {
+    public function __construct()
+    {
     }
 
     public static function class(): string
     {
-        return AdminGlobalPermission::class;
+        return ApiToken::class;
     }
 
     /**
@@ -37,8 +32,8 @@ final class AdminGlobalPermissionFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'admin' => AdminFactory::random(),
-            'role' => self::faker()->randomElement($this->adminRoleRepository->findBy(['scope' => PermissionScope::GLOBAL])),
+            'expiresAt' => (new \DateTimeImmutable())->modify('+7 days'),
+            'ownedBy' => AdminFactory::random()
         ];
     }
 
@@ -48,7 +43,7 @@ final class AdminGlobalPermissionFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(AdminGlobalPermission $globalPermission): void {})
+            // ->afterInstantiate(function(ApiToken $apiToken): void {})
         ;
     }
 }

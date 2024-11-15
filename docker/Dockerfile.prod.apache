@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libonig-dev \
     libzip-dev \
-    && docker-php-ext-install intl pdo pdo_mysql opcache
+    && docker-php-ext-install intl pdo pdo_mysql opcache \
+    && docker-php-ext-configure intl
 
 # Enable Apache mod_rewrite and other necessary modules
 RUN a2enmod rewrite headers

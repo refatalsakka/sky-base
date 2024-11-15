@@ -2,22 +2,22 @@
 
 namespace App\Repository\Admin;
 
-use App\Entity\Admin\AdminGlobalPermissions;
+use App\Entity\Admin\AdminGlobalPermission;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<AdminGlobalPermissions>
+ * @extends ServiceEntityRepository<AdminGlobalPermission>
  */
-class AdminGlobalPermissionsRepository extends ServiceEntityRepository
+class AdminGlobalPermissionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, AdminGlobalPermissions::class);
+        parent::__construct($registry, AdminGlobalPermission::class);
     }
 
 //    /**
-//     * @return AdminGlobalPermissions[] Returns an array of AdminGlobalPermissions objects
+//     * @return AdminGlobalPermission[] Returns an array of AdminGlobalPermission objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -31,7 +31,7 @@ class AdminGlobalPermissionsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?AdminGlobalPermissions
+//    public function findOneBySomeField($value): ?AdminGlobalPermission
 //    {
 //        return $this->createQueryBuilder('g')
 //            ->andWhere('g.exampleField = :val')

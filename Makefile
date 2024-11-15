@@ -4,10 +4,6 @@
 
 .PHONY: build-dev	
 build-dev:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
-
-.PHONY: up-dev
-up-dev:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
 
 .PHONY: stop-dev
@@ -17,10 +13,6 @@ stop-dev:
 .PHONY: build-prod
 build-prod:
 	docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build
-
-.PHONY: up-prod
-up-prod:
-	docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
 
 .PHONY: stop-prod
 stop-prod:

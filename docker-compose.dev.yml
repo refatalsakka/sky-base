@@ -3,6 +3,7 @@ services:
     build:
       dockerfile: docker/Dockerfile.dev.apache
     volumes:
+      - ./vendor:/var/www/html/vendor
       - ./src:/var/www/html/src
       - ./bin:/var/www/html/bin
       - ./migrations:/var/www/html/migrations
