@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Admin\Admin;
-use Psr\Log\LoggerInterface;
 use App\Service\ApiTokenService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,14 +14,19 @@ class SecurityController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private ApiTokenService $apiTokenService,
-        private LoggerInterface $logger
+        private ApiTokenService $apiTokenService
     ) {}
 
     #[Route('/login', name: 'app_login', methods: ['POST'])]
     public function login(#[CurrentUser] Admin $admin = null): Response
     {
-        $apiToken = $this->apiTokenService->createTokenForAdmin($admin);
+        if (!$admin) {
+            return $this->json([
+                'error' => 'Invalid user',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $apiToken = $this->apiTokenService->createToken($admin);
 
         return $this->json([
             'token' => $apiToken->getToken(),
@@ -32,7 +36,8 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/logout', name: 'app_logout', methods: ['POST'])]
-    public function logout(): void
+    public function logout(#[CurrentUser] Admin $admin = null): void
     {
+        $this->apiTokenService->removeValidTokens($admin);
     }
 }

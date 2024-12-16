@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ApiResource(
@@ -42,15 +43,27 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
     #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
     #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
     private ?string $password = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
+    private ?string $image = null;
 
     /**
      * @var Collection<int, AdminGlobalPermission>
@@ -226,6 +239,18 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
                 $apiToken->setOwnedBy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

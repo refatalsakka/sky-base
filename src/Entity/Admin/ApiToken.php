@@ -4,11 +4,12 @@ namespace App\Entity\Admin;
 
 use App\Repository\Admin\ApiTokenRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ApiTokenRepository::class)]
 class ApiToken
 {
-    private const PERSONAL_ACCESS_TOKEN_PREFIX = 'per_';
+    private const PERSONAL_ACCESS_TOKEN_PREFIX = 'tcp_';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,11 +21,20 @@ class ApiToken
     private ?Admin $ownedBy = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank()]
+    #[Assert\Type('dateTime')]
     #[ORM\JoinColumn(nullable: true)]
     private ?\DateTimeImmutable $expiresAt = null;
 
     #[ORM\Column(length: 68)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
     private string $token;
+
+    #[ORM\Column(type: 'boolean')]
+    #[Assert\NotBlank()]
+    #[Assert\Type('boolean')]
+    private bool $valid = true;
 
     public function __construct(string $tokenType = self::PERSONAL_ACCESS_TOKEN_PREFIX)
     {
@@ -68,6 +78,13 @@ class ApiToken
 
     public function isValid(): bool
     {
-        return $this->expiresAt === null || $this->expiresAt > new \DateTimeImmutable();
+        return $this->valid && $this->expiresAt === null || $this->expiresAt > new \DateTimeImmutable();
+    }
+
+    public function setValid(bool $valid): static
+    {
+        $this->valid = $valid;
+
+        return $this;
     }
 }

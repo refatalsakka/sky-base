@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use App\Repository\Admin\AdminRoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdminRoleRepository::class)]
 #[ApiResource(
@@ -34,10 +35,14 @@ class AdminRole
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
     #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
     private ?string $name = null;
 
     #[ORM\Column(enumType: PermissionScope::class)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
     #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
     private ?PermissionScope $scope = null;
 

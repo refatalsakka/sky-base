@@ -12,19 +12,30 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
+        login:
+            pattern: ^/login$
             stateless: true
-            lazy: true
-            provider: app_user_provider
             json_login:
                 check_path: app_login
                 username_path: username
                 password_path: password
+        logout:
+            pattern: ^/logout$
+            stateless: true
+            provider: app_user_provider
+            access_token:
+                token_handler: App\Security\ApiTokenHandler
             logout:
                 path: app_logout
-            # access_token:
-            #     token_handler: App\Security\ApiTokenHandler
-
+        api:
+            pattern: ^/api/v1
+            stateless: true
+            provider: app_user_provider
+            access_token:
+                token_handler: App\Security\ApiTokenHandler
+    role_hierarchy:
+        ROLE_EDIT: [ROLE_VIEW]
+        ROLE_DELETE: [ROLE_VIEW]
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -34,11 +45,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/api/v1/admins, roles: ROLE_VIEW, methods: ['GET'] }
-        # - { path: ^/api/v1/admins, roles: ROLE_EDIT, methods: ['POST', 'PUT'] }
-        # - { path: ^/api/v1/admins, roles: ROLE_DELETE, methods: ['DELETE'] }
+        - { path: ^/logout, roles: IS_AUTHENTICATED_FULLY }
 
-        # - { path: ^/api/v1/units, roles: ROLE_EDIT, methods: ['POST'] }
+        - { path: ^/api/v1, roles: ROLE_VIEW, methods: ['GET'] }
+        - { path: ^/api/v1, roles: ROLE_EDIT, methods: ['POST', 'PUT'] }
+        - { path: ^/api/v1, roles: ROLE_DELETE, methods: ['DELETE'] }
+
+        # - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 when@test:
     security:
         password_hashers:

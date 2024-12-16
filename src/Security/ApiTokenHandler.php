@@ -3,7 +3,6 @@
 namespace App\Security;
 
 use SensitiveParameter;
-use Psr\Log\LoggerInterface;
 use App\Entity\Admin\ApiToken;
 use App\Repository\Admin\ApiTokenRepository;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -14,15 +13,12 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationExc
 class ApiTokenHandler implements AccessTokenHandlerInterface
 {
     public function __construct(
-        private ApiTokenRepository $apiTokenRepository,
-        private LoggerInterface $logger
+        private ApiTokenRepository $apiTokenRepository
     ) {
     }
 
     public function getUserBadgeFrom(#[SensitiveParameter] string $accessToken): UserBadge
     {
-        $this->logger->info('Validating access token', ['token' => $accessToken]);
-
         /** @var ApiToken */
         $token = $this->apiTokenRepository->findOneBy(['token' => $accessToken]);
 
