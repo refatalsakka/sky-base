@@ -45,8 +45,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/api/v1/docs }
-
+        - { path: ^/api/v1/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, roles: IS_AUTHENTICATED_FULLY }
 
         - { path: ^/api/v1, roles: ROLE_VIEW, methods: ['GET'] }
