@@ -16,8 +16,10 @@ final class AdminFactory extends PersistentProxyObjectFactory
      *
      * @todo inject services if required
      */
-    public function __construct(private UserPasswordHasherInterface $passwordHasher)
-    {
+    public function __construct(
+            private UserPasswordHasherInterface $passwordHasher,
+            private string $defaultPassword
+        ) {
     }
 
     public static function class(): string
@@ -45,7 +47,7 @@ final class AdminFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this->afterInstantiate(function (Admin $admin): void {
-            $hashedPassword = $this->passwordHasher->hashPassword($admin, '12345');
+            $hashedPassword = $this->passwordHasher->hashPassword($admin, $this->defaultPassword);
             $admin->setPassword($hashedPassword);
         });
     }

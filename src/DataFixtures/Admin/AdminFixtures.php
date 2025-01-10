@@ -11,6 +11,9 @@ class AdminFixtures extends BaseFixture
     public function load(ObjectManager $manager): void
     {
         AdminFactory::createMany(5);
+        AdminFactory::createOne([
+            'username' => $_ENV['DEFAULT_ADMIN_USERNAME'],
+        ]);
     }
 
     public static function getGroups(): array
