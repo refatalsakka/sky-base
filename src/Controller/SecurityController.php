@@ -31,7 +31,8 @@ class SecurityController extends AbstractController
         return $this->json([
             'token' => $apiToken->getToken(),
             'expires_at' => $apiToken->getExpiresAt()?->format(\DateTime::ATOM),
-            'token_type' => 'Bearer'
+            'token_type' => 'Bearer',
+            'admin' => $admin
         ], Response::HTTP_ACCEPTED);
     }
 
