@@ -208,11 +208,10 @@ class Individual
     #[Groups(['individual:read'])]
     private ?Unit $unit = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'blob')]
     #[Assert\NotBlank()]
-    #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
-    private ?string $image = null;
+    private mixed $image = null;
 
     #[ORM\OneToOne(mappedBy: 'individual', cascade: ['persist', 'remove'])]
     private ?IndividualTemporaryGuest $individualTemporaryGuest = null;
@@ -566,6 +565,10 @@ class Individual
 
     public function getImage(): ?string
     {
+        if (is_resource($this->image)) {
+            return stream_get_contents($this->image);
+        }
+
         return $this->image;
     }
 

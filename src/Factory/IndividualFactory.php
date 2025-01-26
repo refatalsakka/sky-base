@@ -58,7 +58,7 @@ final class IndividualFactory extends PersistentProxyObjectFactory
             'detentionTimes' => self::faker()->numberBetween(0, 5),
             'educationLevel' => EducationLevelFactory::random(),
             'fatherAlive' => self::faker()->boolean(),
-            'image' => self::faker()->imageUrl(640, 480, 'people'),
+            'image' => $this->generateBlobImage('Profile Picture'),
             'imprisonmentTimes' => self::faker()->numberBetween(0, 2),
             'joinDate' => self::faker()->dateTimeBetween('-40 years', 'now'),
             'militaryId' => self::faker()->regexify('MIL[0-9]{6}'),
@@ -113,5 +113,23 @@ final class IndividualFactory extends PersistentProxyObjectFactory
         return $this
             // ->afterInstantiate(function(Individual $individual): void {})
         ;
+    }
+
+    /**
+     * Generate binary image data for the image field.
+     */
+    private function generateBlobImage(string $text): string
+    {
+        $image = imagecreate(180, 180);
+        $backgroundColor = imagecolorallocate($image, 255, 255, 255);
+        $textColor = imagecolorallocate($image, 0, 0, 0);
+        imagestring($image, 5, 10, 10, $text, $textColor);
+
+        ob_start();
+        imagepng($image);
+        $blob = ob_get_clean();
+        imagedestroy($image);
+
+        return $blob;
     }
 }
