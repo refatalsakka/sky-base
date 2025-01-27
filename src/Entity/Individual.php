@@ -38,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             extraProperties: ['militaryRankCode' => 'non_commissioned_officer']
         ),
         new GetCollection(
-            uriTemplate: '/individuals/enlisteds',
+            uriTemplate: '/individuals/enlisted',
             normalizationContext: ['groups' => 'individual:collection'],
             provider: MilitaryRankProvider::class,
             extraProperties: ['militaryRankCode' => 'enlisted']

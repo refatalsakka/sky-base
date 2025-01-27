@@ -15,6 +15,7 @@ use App\Entity\Admin\AdminUnitPermission;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Attribute\Groups;
+use App\Validator\PreventUnitDeletionIfHasIndividuals;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -39,7 +40,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             securityPostDenormalize: 'is_granted("ROLE_VIEW_NON_COMMISSIONED_OFFICERS", object)'
         ),  
         new GetCollection(
-            uriTemplate: '/units/{id}/enlisteds',
+            uriTemplate: '/units/{id}/enlisted',
             normalizationContext: ['groups' => 'unit:collection'],
             extraProperties: ['militaryRankCode' => 'enlisted'],
             securityPostDenormalize: 'is_granted("ROLE_VIEW_ENLISTED", object)'
@@ -55,6 +56,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             securityPostDenormalize: 'is_granted("ROLE_EDIT_UNIT", object)'
         ),
         new Delete(
+            validate: true,
+            validationContext: ['groups' => ['unit:delete']],
             securityPostDenormalize: 'is_granted("ROLE_DELETE_UNIT", object)'
         )
     ],
@@ -62,6 +65,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     paginationEnabled: false,
 )]
 #[UniqueEntity(fields: ['name'])]
+#[PreventUnitDeletionIfHasIndividuals(groups: ['unit:delete'])]
 class Unit
 {
     #[ORM\Id]

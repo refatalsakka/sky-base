@@ -59,11 +59,11 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Type('string')]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'blob')]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
     #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
-    private ?string $image = null;
+    private mixed $image = null;
 
     /**
      * @var Collection<int, AdminGlobalPermission>
@@ -245,6 +245,10 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getImage(): ?string
     {
+        if (is_resource($this->image)) {
+            return stream_get_contents($this->image);
+        }
+
         return $this->image;
     }
 

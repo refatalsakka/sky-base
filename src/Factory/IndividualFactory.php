@@ -7,6 +7,7 @@ use App\Entity\MilitaryRank;
 use App\Repository\UnitRepository;
 use App\Repository\ReligionRepository;
 use App\Repository\BloodTypeRepository;
+use App\Factory\Util\ImageGeneratorTrait;
 use App\Repository\MilitaryRankRepository;
 use App\Repository\SocialStatusRepository;
 use App\Repository\EducationLevelRepository;
@@ -19,6 +20,8 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class IndividualFactory extends PersistentProxyObjectFactory
 {
+    use ImageGeneratorTrait;
+
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -113,23 +116,5 @@ final class IndividualFactory extends PersistentProxyObjectFactory
         return $this
             // ->afterInstantiate(function(Individual $individual): void {})
         ;
-    }
-
-    /**
-     * Generate binary image data for the image field.
-     */
-    private function generateBlobImage(string $text): string
-    {
-        $image = imagecreate(180, 180);
-        $backgroundColor = imagecolorallocate($image, 255, 255, 255);
-        $textColor = imagecolorallocate($image, 0, 0, 0);
-        imagestring($image, 5, 10, 10, $text, $textColor);
-
-        ob_start();
-        imagepng($image);
-        $blob = ob_get_clean();
-        imagedestroy($image);
-
-        return $blob;
     }
 }
