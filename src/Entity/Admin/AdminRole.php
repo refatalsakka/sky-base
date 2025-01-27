@@ -31,19 +31,19 @@ class AdminRole
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
+    #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
+    #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?string $name = null;
 
     #[ORM\Column(enumType: PermissionScope::class)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
+    #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?PermissionScope $scope = null;
 
     /**

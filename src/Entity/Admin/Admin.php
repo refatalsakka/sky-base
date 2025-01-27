@@ -39,19 +39,19 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
+    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
+    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
+    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
@@ -62,7 +62,7 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
+    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?string $image = null;
 
     /**
@@ -70,14 +70,14 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: AdminGlobalPermission::class, mappedBy: 'admin', cascade: ['remove'], orphanRemoval: true)]
     #[Groups(['admin:collection', 'admin:read'])]
-    private Collection $adminGlobalPermissions;
+    private Collection $globalPermissions;
 
     /**
      * @var Collection<int, AdminUnitPermission>
      */
     #[ORM\OneToMany(targetEntity: AdminUnitPermission::class, mappedBy: 'admin', cascade: ['remove'], orphanRemoval: true)]
     #[Groups(['admin:collection', 'admin:read'])]
-    private Collection $adminUnitPermissions;
+    private Collection $unitPermissions;
 
     /**
      * @var Collection<int, ApiToken>
@@ -87,8 +87,8 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->adminGlobalPermissions = new ArrayCollection();
-        $this->adminUnitPermissions = new ArrayCollection();
+        $this->globalPermissions = new ArrayCollection();
+        $this->unitPermissions = new ArrayCollection();
         $this->apiTokens = new ArrayCollection();
     }
 
@@ -136,24 +136,24 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, AdminGlobalPermission>
      */
-    public function getAdminGlobalPermissions(): Collection
+    public function getGlobalPermissions(): Collection
     {
-        return $this->adminGlobalPermissions;
+        return $this->globalPermissions;
     }
 
-    public function addAdminGlobalPermission(AdminGlobalPermission $globalPermission): static
+    public function addGlobalPermission(AdminGlobalPermission $globalPermission): static
     {
-        if (!$this->adminGlobalPermissions->contains($globalPermission)) {
-            $this->adminGlobalPermissions->add($globalPermission);
+        if (!$this->globalPermissions->contains($globalPermission)) {
+            $this->globalPermissions->add($globalPermission);
             $globalPermission->setAdmin($this);
         }
 
         return $this;
     }
 
-    public function removeAdminGlobalPermission(AdminGlobalPermission $globalPermission): static
+    public function removeGlobalPermission(AdminGlobalPermission $globalPermission): static
     {
-        if ($this->adminGlobalPermissions->removeElement($globalPermission)) {
+        if ($this->globalPermissions->removeElement($globalPermission)) {
             // set the owning side to null (unless already changed)
             if ($globalPermission->getAdmin() === $this) {
                 $globalPermission->setAdmin(null);
@@ -166,24 +166,24 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, AdminUnitPermission>
      */
-    public function getAdminUnitPermissions(): Collection
+    public function getUnitPermissions(): Collection
     {
-        return $this->adminUnitPermissions;
+        return $this->unitPermissions;
     }
 
-    public function addAdminUnitPermission(AdminUnitPermission $adminUnitPermission): static
+    public function addUnitPermission(AdminUnitPermission $adminUnitPermission): static
     {
-        if (!$this->adminUnitPermissions->contains($adminUnitPermission)) {
-            $this->adminUnitPermissions->add($adminUnitPermission);
+        if (!$this->unitPermissions->contains($adminUnitPermission)) {
+            $this->unitPermissions->add($adminUnitPermission);
             $adminUnitPermission->setAdmin($this);
         }
 
         return $this;
     }
 
-    public function removeAdminUnitPermission(AdminUnitPermission $adminUnitPermission): static
+    public function removeUnitPermission(AdminUnitPermission $adminUnitPermission): static
     {
-        if ($this->adminUnitPermissions->removeElement($adminUnitPermission)) {
+        if ($this->unitPermissions->removeElement($adminUnitPermission)) {
             // set the owning side to null (unless already changed)
             if ($adminUnitPermission->getAdmin() === $this) {
                 $adminUnitPermission->setAdmin(null);
@@ -197,7 +197,7 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = [];
 
-        foreach ($this->adminGlobalPermissions as $globalPermission) {
+        foreach ($this->globalPermissions as $globalPermission) {
             $roles[] = $globalPermission->getRole()->getName();
         }
 

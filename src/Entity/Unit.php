@@ -24,28 +24,39 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new GetCollection(
             uriTemplate: '/units',
             normalizationContext: ['groups' => 'unit:collection'],
+            security: 'is_granted("ROLE_VIEW")'
         ),
         new GetCollection(
             uriTemplate: '/units/{id}/officers',
             normalizationContext: ['groups' => 'unit:collection'],
-            extraProperties: ['militaryRankCode' => 'officer']
+            extraProperties: ['militaryRankCode' => 'officer'],
+            securityPostDenormalize: 'is_granted("ROLE_VIEW_OFFICERS", object)'
         ),
         new GetCollection(
             uriTemplate: '/units/{id}/non-commissioned-officers',
             normalizationContext: ['groups' => 'unit:collection'],
             extraProperties: ['militaryRankCode' => 'non_commissioned_officer'],
-        ),
+            securityPostDenormalize: 'is_granted("ROLE_VIEW_NON_COMMISSIONED_OFFICERS", object)'
+        ),  
         new GetCollection(
             uriTemplate: '/units/{id}/enlisteds',
             normalizationContext: ['groups' => 'unit:collection'],
-            extraProperties: ['militaryRankCode' => 'enlisted']
+            extraProperties: ['militaryRankCode' => 'enlisted'],
+            securityPostDenormalize: 'is_granted("ROLE_VIEW_ENLISTED", object)'
         ),
         new Get(
             normalizationContext: ['groups' => 'unit:read'],
+            securityPostDenormalize: 'is_granted("ROLE_VIEW_UNIT", object)',
         ),
-        new Post(),
-        new Put(),
-        new Delete()
+        new Post(
+            security: 'is_granted("ROLE_EDIT")'
+        ),
+        new Put(
+            securityPostDenormalize: 'is_granted("ROLE_EDIT_UNIT", object)'
+        ),
+        new Delete(
+            securityPostDenormalize: 'is_granted("ROLE_DELETE_UNIT", object)'
+        )
     ],
     order: ['name' => 'ASC'],
     paginationEnabled: false,
@@ -56,13 +67,13 @@ class Unit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['unit:read', 'unit:collection', 'individual:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['unit:read', 'unit:collection', 'individual:read', 'adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['unit:read', 'unit:collection', 'individual:read', 'adminUnitPermissions:collection', 'adminUnitPermissions:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['unit:read', 'unit:collection', 'individual:read', 'adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
     private ?string $name = null;
 
 

@@ -14,10 +14,10 @@ use App\Repository\Admin\AdminUnitPermissionRepository;
 #[ApiResource(
     operations: [
         new GetCollection(
-            normalizationContext: ['groups' => 'adminUnitPermissions:collection'],
+            normalizationContext: ['groups' => 'adminUnitPermission:collection'],
         ),
         new Get(
-            normalizationContext: ['groups' => 'adminUnitPermissions:read'],
+            normalizationContext: ['groups' => 'adminUnitPermission:read'],
         ),
     ],
     paginationEnabled: false,
@@ -27,19 +27,19 @@ class AdminUnitPermission
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['adminUnitPermissions:collection', 'adminUnitPermissions:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'adminUnitPermissions')]
-    #[Groups(['adminUnitPermissions:collection', 'adminUnitPermissions:read'])]
+    #[Groups(['adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?Admin $admin = null;
 
     #[ORM\ManyToOne(inversedBy: 'adminUnitPermissions')]
-    #[Groups(['adminUnitPermissions:collection', 'adminUnitPermissions:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
     private ?AdminRole $role = null;
 
     #[ORM\ManyToOne(inversedBy: 'adminUnitPermissions')]
-    #[Groups(['adminUnitPermissions:collection', 'adminUnitPermissions:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
     private ?Unit $unit = null;
 
     public function getId(): ?int
