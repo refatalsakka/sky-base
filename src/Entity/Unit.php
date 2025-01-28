@@ -96,7 +96,7 @@ class Unit
     /**
      * @var Collection<int, AdminUnitPermission>
      */
-    #[ORM\OneToMany(targetEntity: AdminUnitPermission::class, mappedBy: 'unit')]
+    #[ORM\OneToMany(targetEntity: AdminUnitPermission::class, mappedBy: 'unit', cascade: ['remove'], orphanRemoval: true)]
     private Collection $adminUnitPermissions;
 
     public function __construct()
