@@ -4,9 +4,13 @@ namespace App\Entity\Admin;
 
 use App\Entity\Unit;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use App\Validator\UniqueAdminUnitPermission;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\Admin\AdminUnitPermissionRepository;
 
@@ -19,9 +23,19 @@ use App\Repository\Admin\AdminUnitPermissionRepository;
         new Get(
             normalizationContext: ['groups' => 'adminUnitPermission:read'],
         ),
+        new Post(
+            validate: true,
+            validationContext: ['groups' => ['adminUnitPermission:save']],
+        ),
+        new Put(
+            validate: true,
+            validationContext: ['groups' => ['adminUnitPermission:save']],
+        ),
+        new Delete(),
     ],
     paginationEnabled: false,
 )]
+#[UniqueAdminUnitPermission(groups: ['adminUnitPermission:save'])]
 class AdminUnitPermission
 {
     #[ORM\Id]

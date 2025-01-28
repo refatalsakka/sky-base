@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use App\Validator\UniqueAdminGlobalPermission;
 use Symfony\Component\Serializer\Attribute\Groups;
 use App\Repository\Admin\AdminGlobalPermissionRepository;
 
@@ -21,12 +22,19 @@ use App\Repository\Admin\AdminGlobalPermissionRepository;
         new Get(
             normalizationContext: ['groups' => 'adminGlobalPermission:read'],
         ),
-        new Post(),
-        new Put(),
-        new Delete()
+        new Post(
+            validate: true,
+            validationContext: ['groups' => ['adminGlobalPermission:save']],
+        ),
+        new Put(
+            validate: true,
+            validationContext: ['groups' => ['adminGlobalPermission:save']],
+        ),
+        new Delete(),
     ],
     paginationEnabled: false,
 )]
+#[UniqueAdminGlobalPermission(groups: ['adminGlobalPermission:save'])]
 class AdminGlobalPermission
 {
     #[ORM\Id]

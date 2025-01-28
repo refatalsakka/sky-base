@@ -17,7 +17,6 @@ class PreventUnitDeletionIfHasIndividualsValidator extends ConstraintValidator
 
         if ($unit->getIndividuals()->count() > 0) {
             $this->context->buildViolation($constraint->message)
-                ->atPath('id')
                 ->addViolation();
         }
     }
