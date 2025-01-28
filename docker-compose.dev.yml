@@ -3,16 +3,20 @@ services:
     build:
       dockerfile: docker/Dockerfile.dev.apache
     volumes:
-      - ./vendor:/var/www/html/vendor
+      - vendor:/var/www/html/vendor
+      - var:/var/www/html/var
       - ./src:/var/www/html/src
-      - ./bin:/var/www/html/bin
-      - ./migrations:/var/www/html/migrations
+      - ./tests:/var/www/html/tests:cached
+      - ./bin:/var/www/html/bin:cached
+      - ./migrations:/var/www/html/migrations:cached
       - ./config:/var/www/html/config
       - ./public:/var/www/html/public
-      - ./data:/var/www/html/data
-      - ./var:/var/www/html/var
-      - ./resources:/var/www/html/resources
-      - ./templates:/var/www/html/templates
+      - ./resources:/var/www/html/resources:cached
+      - ./templates:/var/www/html/templates:cached
       - ./.env:/var/www/html/.env
       - ./.env.dev:/var/www/html/.env.dev
       - ./.env.prod:/var/www/html/.env.prod
+
+volumes:
+  vendor:
+  var:
