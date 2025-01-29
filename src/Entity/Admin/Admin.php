@@ -5,18 +5,19 @@ namespace App\Entity\Admin;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Post;
+use App\Validator\Base64Image;
 use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\Admin\AdminRepository;
-use Doctrine\Common\Collections\Collection;
 use App\Entity\Admin\AdminGlobalPermission;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ApiResource(
@@ -59,11 +60,10 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Type('string')]
     private ?string $password = null;
 
-    #[ORM\Column(type: 'blob')]
-    #[Assert\NotBlank()]
-    #[Assert\Type('string')]
-    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
-    private mixed $image = null;
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Base64Image]
+    #[Groups(['admin:collection', 'admin:read'])]
+    private ?string $image = null;
 
     /**
      * @var Collection<int, AdminGlobalPermission>
@@ -243,19 +243,15 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        if (is_resource($this->image)) {
-            return stream_get_contents($this->image);
-        }
-
-        return $this->image;
-    }
-
     public function setImage(string $image): static
     {
         $this->image = $image;
 
         return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
     }
 }

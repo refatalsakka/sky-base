@@ -40,7 +40,7 @@ final class AdminFactory extends PersistentProxyObjectFactory
         return [
             'name' => self::faker()->firstName('male') . ' ' . self::faker()->lastName('male'),
             'username' => self::faker()->username(255),
-            'image' => $this->generateBlobImage('Profile Picture')
+            'image' => $this->generateBase64Image('Profile Picture')
         ];
     }
 

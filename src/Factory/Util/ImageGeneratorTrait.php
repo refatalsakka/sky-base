@@ -4,7 +4,7 @@ namespace App\Factory\Util;
 
 trait ImageGeneratorTrait
 {
-    private function generateBlobImage(string $text): string
+    private function generateBase64Image(string $text): string
     {
         $image = imagecreate(180, 180);
         $backgroundColor = imagecolorallocate($image, 255, 255, 255);
@@ -13,9 +13,9 @@ trait ImageGeneratorTrait
 
         ob_start();
         imagepng($image);
-        $blob = ob_get_clean();
+        $imageData = ob_get_clean();
         imagedestroy($image);
 
-        return $blob;
+        return 'data:image/png;base64,' . base64_encode($imageData);
     }
 }

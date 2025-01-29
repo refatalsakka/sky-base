@@ -61,7 +61,7 @@ final class IndividualFactory extends PersistentProxyObjectFactory
             'detentionTimes' => self::faker()->numberBetween(0, 5),
             'educationLevel' => EducationLevelFactory::random(),
             'fatherAlive' => self::faker()->boolean(),
-            'image' => $this->generateBlobImage('Profile Picture'),
+            'image' => $this->generateBase64Image('Profile Picture'),
             'imprisonmentTimes' => self::faker()->numberBetween(0, 2),
             'joinDate' => self::faker()->dateTimeBetween('-40 years', 'now'),
             'militaryId' => self::faker()->regexify('MIL[0-9]{6}'),

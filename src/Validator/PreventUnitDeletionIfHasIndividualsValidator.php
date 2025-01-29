@@ -12,7 +12,7 @@ class PreventUnitDeletionIfHasIndividualsValidator extends ConstraintValidator
     public function validate(mixed $unit, Constraint $constraint): void
     {
         if (!$unit instanceof Unit) {
-            throw new UnexpectedTypeException($unit, Unit::class);
+            return;
         }
 
         if ($unit->getIndividuals()->count() > 0) {
