@@ -2,6 +2,8 @@
 # DOCKER_COMPOSE #
 ##################
 
+APACHE_CONTAINER=apache
+
 .PHONY: build-dev	
 build-dev:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
@@ -18,22 +20,19 @@ build-prod:
 stop-prod:
 	docker compose stop
 
+.PHONY: clear-cache
+clear-cache:
+	docker compose exec $(APACHE_CONTAINER) php bin/console cache:clear
+
 #################
 # DATA FIXTURES #
 #################
 
 .PHONY: data-dev
 data-dev:
-	yes | php bin/console doctrine:database:drop --force && \
-	php bin/console doctrine:database:create && \
-	cd migrations && rm -rf *.php && cd .. && \
-	php bin/console doctrine:migrations:diff && \
-	yes | php bin/console doctrine:migrations:migrate && \
-	yes | php bin/console doctrine:fixtures:load
-
-.PHONY: data-prod
-data-prod:
-	yes | php bin/console doctrine:database:drop --force && \
-	php bin/console doctrine:database:create && \
-	yes | php bin/console doctrine:migrations:migrate && \
-	yes | php bin/console doctrine:fixtures:load --group=prod
+	docker compose exec $(APACHE_CONTAINER) php bin/console doctrine:database:drop --force && \
+	docker compose exec $(APACHE_CONTAINER) php bin/console doctrine:database:create && \
+	docker compose exec $(APACHE_CONTAINER) sh -c "cd migrations && rm -rf *.php && cd .." && \
+	docker compose exec $(APACHE_CONTAINER) php bin/console doctrine:migrations:diff && \
+	docker compose exec $(APACHE_CONTAINER) php bin/console doctrine:migrations:migrate --no-interaction && \
+	docker compose exec $(APACHE_CONTAINER) php bin/console doctrine:fixtures:load --no-interaction
