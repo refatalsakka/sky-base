@@ -7,6 +7,7 @@ use App\Entity\Admin\Admin;
 class AdminDto
 {
     public function __construct(
+        public int $id,
         public string $name,
         public string $username,
         public ?string $image,
@@ -17,6 +18,7 @@ class AdminDto
     public static function fromEntity(Admin $admin): self
     {
         return new self(
+            $admin->getId(),
             $admin->getName(),
             $admin->getUsername(),
             $admin->getImage(),
