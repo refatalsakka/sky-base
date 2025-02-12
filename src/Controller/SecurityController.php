@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Dto\Admin\AdminDto;
 use App\Entity\Admin\Admin;
 use App\Service\ApiTokenService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +33,7 @@ class SecurityController extends AbstractController
             'token' => $apiToken->getToken(),
             'expires_at' => $apiToken->getExpiresAt()?->format(\DateTime::ATOM),
             'token_type' => 'Bearer',
-            'admin' => $admin
+            'admin' => AdminDto::fromEntity($admin),
         ], Response::HTTP_ACCEPTED);
     }
 
