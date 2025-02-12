@@ -50,4 +50,16 @@ class IndividualRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByUnitAndMilitaryRank(int $unitId, string $militaryRankCode): array
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.militaryRank', 'mr')
+            ->where('i.unit = :unitId')
+            ->andWhere('mr.code = :rankCode')
+            ->setParameter('unitId', $unitId)
+            ->setParameter('rankCode', $militaryRankCode)
+            ->getQuery()
+            ->getResult();
+    }
 }

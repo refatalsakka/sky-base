@@ -12,6 +12,7 @@ use App\Repository\UnitRepository;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use App\Entity\Admin\AdminUnitPermission;
+use App\Provider\UnitIndividualsProvider;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -30,16 +31,19 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             uriTemplate: '/units/{id}/officers',
             normalizationContext: ['groups' => 'unit:collection'],
             extraProperties: ['militaryRankCode' => 'officer'],
+            provider: UnitIndividualsProvider::class,
         ),
         new GetCollection(
             uriTemplate: '/units/{id}/non-commissioned-officers',
             normalizationContext: ['groups' => 'unit:collection'],
             extraProperties: ['militaryRankCode' => 'non_commissioned_officer'],
+            provider: UnitIndividualsProvider::class,
         ),  
         new GetCollection(
             uriTemplate: '/units/{id}/enlisted',
             normalizationContext: ['groups' => 'unit:collection'],
             extraProperties: ['militaryRankCode' => 'enlisted'],
+            provider: UnitIndividualsProvider::class,
         ),
         new Get(
             normalizationContext: ['groups' => 'unit:read'],
@@ -80,7 +84,7 @@ class Unit
      * @var Collection<int, Individual>
      */
     #[ORM\OneToMany(targetEntity: Individual::class, mappedBy: 'unit')]
-    #[Groups(['unit:read'])]
+    #[Groups(['unit:read', 'unit:collection'])]
     private Collection $individuals;
 
     /**

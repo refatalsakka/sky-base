@@ -57,23 +57,23 @@ class Individual
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'vacation:collection', 'unit:collection', 'individualVacation:collection', 'individualVacation:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection', 'vacation:collection', 'unit:collection', 'individualVacation:collection', 'individualVacation:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'individuals')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'individualVacation:collection', 'individualVacation:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection', 'individualVacation:collection', 'individualVacation:read'])]
     private ?MilitaryRank $militaryRank = null;
 
     #[ORM\ManyToOne(inversedBy: 'individuals')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'individualVacation:collection', 'individualVacation:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection', 'individualVacation:collection', 'individualVacation:read'])]
     private ?MilitarySubRank $militarySubRank = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'vacation:collection', 'unit:collection', 'individualVacation:collection', 'individualVacation:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection', 'vacation:collection', 'unit:collection', 'individualVacation:collection', 'individualVacation:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -137,7 +137,7 @@ class Individual
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'individualVacation:collection', 'individualVacation:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection', 'individualVacation:collection', 'individualVacation:read'])]
     private ?string $mobileNumber = null;
 
     #[ORM\Column(length: 255)]

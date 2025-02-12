@@ -27,13 +27,13 @@ class MilitaryRank
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['militaryRank:collection', 'individual:collection', 'individual:read', 'unit:read', 'individualVacation:collection', 'individualVacation:read'])]
+    #[Groups(['militaryRank:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection', 'individualVacation:collection', 'individualVacation:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['militaryRank:collection', 'individual:collection', 'individual:read', 'unit:read', 'individualVacation:collection', 'individualVacation:read'])]
+    #[Groups(['militaryRank:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection', 'individualVacation:collection', 'individualVacation:read'])]
     private ?string $rank = null;
 
     /**
