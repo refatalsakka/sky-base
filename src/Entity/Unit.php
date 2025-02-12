@@ -25,40 +25,30 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new GetCollection(
             uriTemplate: '/units',
             normalizationContext: ['groups' => 'unit:collection'],
-            security: 'is_granted("ROLE_VIEW")'
         ),
         new GetCollection(
             uriTemplate: '/units/{id}/officers',
             normalizationContext: ['groups' => 'unit:collection'],
             extraProperties: ['militaryRankCode' => 'officer'],
-            securityPostDenormalize: 'is_granted("ROLE_VIEW_OFFICERS", object)'
         ),
         new GetCollection(
             uriTemplate: '/units/{id}/non-commissioned-officers',
             normalizationContext: ['groups' => 'unit:collection'],
             extraProperties: ['militaryRankCode' => 'non_commissioned_officer'],
-            securityPostDenormalize: 'is_granted("ROLE_VIEW_NON_COMMISSIONED_OFFICERS", object)'
         ),  
         new GetCollection(
             uriTemplate: '/units/{id}/enlisted',
             normalizationContext: ['groups' => 'unit:collection'],
             extraProperties: ['militaryRankCode' => 'enlisted'],
-            securityPostDenormalize: 'is_granted("ROLE_VIEW_ENLISTED", object)'
         ),
         new Get(
             normalizationContext: ['groups' => 'unit:read'],
-            securityPostDenormalize: 'is_granted("ROLE_VIEW_UNIT", object)',
         ),
-        new Post(
-            security: 'is_granted("ROLE_EDIT")'
-        ),
-        new Put(
-            securityPostDenormalize: 'is_granted("ROLE_EDIT_UNIT", object)'
-        ),
+        new Post( ),
+        new Put(),
         new Delete(
             validate: true,
             validationContext: ['groups' => ['unit:delete']],
-            securityPostDenormalize: 'is_granted("ROLE_DELETE_UNIT", object)'
         )
     ],
     order: ['name' => 'ASC'],
