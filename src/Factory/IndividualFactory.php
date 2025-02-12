@@ -20,8 +20,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class IndividualFactory extends PersistentProxyObjectFactory
 {
-    use ImageGeneratorTrait;
-
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -61,7 +59,7 @@ final class IndividualFactory extends PersistentProxyObjectFactory
             'detentionTimes' => self::faker()->numberBetween(0, 5),
             'educationLevel' => EducationLevelFactory::random(),
             'fatherAlive' => self::faker()->boolean(),
-            'image' => $this->generateBase64Image('Profile Picture'),
+            'image' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0AQMAAAAHA5RxAAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAcklEQVRYhWNgGAXkgw8JBdiEGWckGGAXZ8AUN5c+fLDhgYENurhlX1piQ4JBGrq4wRke8wcJBoexiBsC1f/HIX4Aw/weNpD5yRju4WE+2Pijwg7DHAyX4xcfBaNgFIyCUTAKRsEoGAWjYBSMglEwCugHAJo1GlHYL8FWAAAAAElFTkSuQmCC',
             'imprisonmentTimes' => self::faker()->numberBetween(0, 2),
             'joinDate' => self::faker()->dateTimeBetween('-40 years', 'now'),
             'militaryId' => self::faker()->regexify('MIL[0-9]{6}'),

@@ -3,7 +3,6 @@
 namespace App\Factory\Admin;
 
 use App\Entity\Admin\Admin;
-use App\Factory\Util\ImageGeneratorTrait;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -12,8 +11,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 final class AdminFactory extends PersistentProxyObjectFactory
 {
-    use ImageGeneratorTrait;
-
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -40,7 +37,7 @@ final class AdminFactory extends PersistentProxyObjectFactory
         return [
             'name' => self::faker()->firstName('male') . ' ' . self::faker()->lastName('male'),
             'username' => self::faker()->username(255),
-            'image' => $this->generateBase64Image('Profile Picture')
+            'image' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0AQMAAAAHA5RxAAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAcklEQVRYhWNgGAXkgw8JBdiEGWckGGAXZ8AUN5c+fLDhgYENurhlX1piQ4JBGrq4wRke8wcJBoexiBsC1f/HIX4Aw/weNpD5yRju4WE+2Pijwg7DHAyX4xcfBaNgFIyCUTAKRsEoGAWjYBSMglEwCugHAJo1GlHYL8FWAAAAAElFTkSuQmCC',
         ];
     }
 
