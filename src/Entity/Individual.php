@@ -79,59 +79,59 @@ class Individual
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $militaryId = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank()]
     #[Assert\Type('dateTime')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?\DateTimeInterface $registerDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank()]
     #[Assert\Type('dateTime')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?\DateTimeInterface $releaseDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'individuals')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['individual:read', 'individual:collection'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?IndividualStatus $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'individuals')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['individual:read', 'individual:collection'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?IndividualTask $task = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank()]
     #[Assert\Type('dateTime')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?\DateTimeInterface $birthdate = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $nationalId = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $placeOfBirth = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank()]
     #[Assert\Type('dateTime')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?\DateTimeInterface $joinDate = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $specialization = null;
 
     #[ORM\Column(length: 255)]
@@ -143,13 +143,13 @@ class Individual
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $profession = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $address = null;
 
     #[ORM\ManyToOne(inversedBy: 'individuals')]
@@ -169,12 +169,12 @@ class Individual
 
     #[ORM\Column(name: 'is_father_alive', type: 'boolean')]
     #[Assert\Type('boolean')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?bool $fatherAlive = null;
 
     #[ORM\Column(name: 'is_mother_alive', type: 'boolean')]
     #[Assert\Type('boolean')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?bool $motherAlive = null;
 
     #[ORM\ManyToOne(inversedBy: 'individuals')]
@@ -185,13 +185,13 @@ class Individual
     #[ORM\Column]
     #[Assert\NotBlank()]
     #[Assert\Type('int')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?int $detentionTimes = null;
 
     #[ORM\Column]
     #[Assert\NotBlank()]
     #[Assert\Type('int')]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?int $imprisonmentTimes = null;
 
     /**
@@ -210,7 +210,7 @@ class Individual
 
     #[ORM\Column(type: 'blob')]
     #[Assert\NotBlank()]
-    #[Groups(['individual:read', 'individual:collection', 'unit:read'])]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private mixed $image = null;
 
     #[ORM\OneToOne(mappedBy: 'individual', cascade: ['persist', 'remove'])]

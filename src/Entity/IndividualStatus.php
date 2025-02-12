@@ -35,13 +35,13 @@ class IndividualStatus
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['individualStatus:collection', 'individualStatus:read', 'individual:collection', 'individual:read'])]
+    #[Groups(['individualStatus:collection', 'individualStatus:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individualStatus:collection', 'individualStatus:read', 'individual:collection', 'individual:read'])]
+    #[Groups(['individualStatus:collection', 'individualStatus:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?string $status = null;
 
     /**

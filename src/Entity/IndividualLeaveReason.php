@@ -35,13 +35,13 @@ class IndividualLeaveReason
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['individualLeaveReason:collection', 'individualLeaveReason:read', 'individual:collection', 'individual:read', 'individualVacation:collection', 'individualVacation:read'])]
+    #[Groups(['individualLeaveReason:collection', 'individualLeaveReason:read', 'individual:collection', 'individual:read', 'individualVacation:collection', 'individualVacation:read', 'unit:read', 'unit:collection'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individualLeaveReason:collection', 'individualLeaveReason:read', 'individual:collection', 'individual:read', 'individualVacation:collection', 'individualVacation:read'])]
+    #[Groups(['individualLeaveReason:collection', 'individualLeaveReason:read', 'individual:collection', 'individual:read', 'individualVacation:collection', 'individualVacation:read', 'unit:read', 'unit:collection'])]
     private ?string $reason = null;
 
     /**

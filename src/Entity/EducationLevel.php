@@ -31,13 +31,13 @@ class EducationLevel
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['educationLevel:collection', 'individual:collection', 'individual:read'])]
+    #[Groups(['educationLevel:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['educationLevel:collection', 'individual:collection', 'individual:read'])]
+    #[Groups(['educationLevel:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?string $level = null;
 
     /**

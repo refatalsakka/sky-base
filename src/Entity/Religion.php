@@ -27,13 +27,13 @@ class Religion
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['religion:collection', 'individual:collection', 'individual:read'])]
+    #[Groups(['religion:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['religion:collection', 'individual:collection', 'individual:read'])]
+    #[Groups(['religion:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?string $religion = null;
 
     /**

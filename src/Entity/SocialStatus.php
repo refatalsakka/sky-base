@@ -27,13 +27,13 @@ class SocialStatus
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['socialStatus:collection', 'individual:collection', 'individual:read'])]
+    #[Groups(['socialStatus:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['socialStatus:collection', 'individual:collection', 'individual:read'])]
+    #[Groups(['socialStatus:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?string $status = null;
 
     /**

@@ -36,20 +36,20 @@ class IndividualVacation
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank()]
     #[Assert\Type('datetime')]
-    #[Groups(['individualVacation:collection', 'individualVacation:read', 'individual:collection', 'individual:read'])]
+    #[Groups(['individualVacation:collection', 'individualVacation:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank()]
     #[Assert\Type('datetime')]
-    #[Groups(['individualVacation:collection', 'individualVacation:read', 'individual:collection', 'individual:read'])]
+    #[Groups(['individualVacation:collection', 'individualVacation:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'individualVacations')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individualVacation:collection', 'individualVacation:read', 'individual:collection', 'individual:read'])]
+    #[Groups(['individualVacation:collection', 'individualVacation:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?IndividualLeaveReason $reason = null;
 
     #[ORM\ManyToOne(inversedBy: 'individualVacations')]
