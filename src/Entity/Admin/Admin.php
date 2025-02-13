@@ -28,8 +28,12 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
         new Get(
             normalizationContext: ['groups' => 'admin:read'],
         ),
-        new Post(),
-        new Put(),
+        new Post(
+            denormalizationContext: ['groups' => 'admin:save'],
+        ),
+        new Put(
+            denormalizationContext: ['groups' => 'admin:save'],
+        ),
         new Delete()
     ],
     forceEager: false,
@@ -46,37 +50,38 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
+    #[Groups(['admin:collection', 'admin:read', 'admin:save', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['admin:collection', 'admin:read','adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
+    #[Groups(['admin:collection', 'admin:read', 'admin:save', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
+    #[Groups(['admin:save'])]
     private ?string $password = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Base64Image]
-    #[Groups(['admin:collection', 'admin:read'])]
+    #[Groups(['admin:collection', 'admin:read', 'admin:save'])]
     private ?string $image = null;
 
     /**
      * @var Collection<int, AdminGlobalPermission>
      */
-    #[ORM\OneToMany(targetEntity: AdminGlobalPermission::class, mappedBy: 'admin', cascade: ['remove'], orphanRemoval: true)]
-    #[Groups(['admin:collection', 'admin:read'])]
+    #[ORM\OneToMany(targetEntity: AdminGlobalPermission::class, mappedBy: 'admin', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups(['admin:collection', 'admin:read', 'admin:save'])]
     private Collection $globalPermissions;
 
     /**
      * @var Collection<int, AdminUnitPermission>
      */
-    #[ORM\OneToMany(targetEntity: AdminUnitPermission::class, mappedBy: 'admin', cascade: ['remove'], orphanRemoval: true)]
-    #[Groups(['admin:collection', 'admin:read'])]
+    #[ORM\OneToMany(targetEntity: AdminUnitPermission::class, mappedBy: 'admin', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups(['admin:collection', 'admin:read', 'admin:save'])]
     private Collection $unitPermissions;
 
     /**

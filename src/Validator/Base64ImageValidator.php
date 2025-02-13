@@ -13,6 +13,10 @@ class Base64ImageValidator extends ConstraintValidator
             return;
         }
 
+        if (!$value) {
+            return;
+        }
+
         if (!preg_match('/^data:image\/(png|jpeg|jpg|gif|webp);base64,/', $value)) {
             $this->context->buildViolation($constraint->message)->addViolation();
             return;

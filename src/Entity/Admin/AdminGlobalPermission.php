@@ -48,7 +48,7 @@ class AdminGlobalPermission
     private ?Admin $admin = null;
 
     #[ORM\ManyToOne(inversedBy: 'adminGlobalPermissions')]
-    #[Groups(['adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'admin:save'])]
     private ?AdminRole $role = null;
 
     public function getId(): ?int

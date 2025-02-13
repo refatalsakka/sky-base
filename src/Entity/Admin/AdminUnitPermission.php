@@ -49,11 +49,11 @@ class AdminUnitPermission
     private ?Admin $admin = null;
 
     #[ORM\ManyToOne(inversedBy: 'adminUnitPermissions')]
-    #[Groups(['adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read', 'admin:save'])]
     private ?AdminRole $role = null;
 
     #[ORM\ManyToOne(inversedBy: 'adminUnitPermissions')]
-    #[Groups(['adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read', 'admin:save'])]
     private ?Unit $unit = null;
 
     public function getId(): ?int
