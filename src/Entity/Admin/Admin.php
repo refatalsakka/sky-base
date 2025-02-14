@@ -3,7 +3,7 @@
 namespace App\Entity\Admin;
 
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Validator\Base64Image;
 use ApiPlatform\Metadata\Delete;
@@ -32,7 +32,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
         new Post(
             denormalizationContext: ['groups' => 'admin:save'],
         ),
-        new Put(
+        new Patch(
             denormalizationContext: ['groups' => 'admin:save'],
         ),
         new Delete()
