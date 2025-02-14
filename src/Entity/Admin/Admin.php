@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
@@ -39,6 +40,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
     forceEager: false,
     paginationEnabled: false,
 )]
+#[UniqueEntity(fields: ['username'])]
 class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -53,7 +55,7 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['admin:collection', 'admin:read', 'admin:save', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
     #[Groups(['admin:collection', 'admin:read', 'admin:save', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
