@@ -19,7 +19,7 @@ class AdminDataPersister implements ProcessorInterface
     ) {
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
         if ($data instanceof Admin && $data->getPassword()) {
             $data->setPassword(
@@ -27,6 +27,6 @@ class AdminDataPersister implements ProcessorInterface
             );
         }
 
-        $this->innerProcessor->process($data, $operation, $uriVariables, $context);
+        return $this->innerProcessor->process($data, $operation, $uriVariables, $context);
     }
 }
