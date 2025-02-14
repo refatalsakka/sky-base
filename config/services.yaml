@@ -22,8 +22,6 @@ services:
             - '../migrations'
             - '../Tests'
 
-    App\Provider\MilitaryRankProvider:
-
     App\DataFixtures\:
         resource: '../src/DataFixtures'
         tags: ['doctrine.fixture.orm']
