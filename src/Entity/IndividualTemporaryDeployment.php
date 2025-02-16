@@ -5,16 +5,20 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use App\Entity\Traits\TimestampableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\IndividualTemporaryDeploymentRepository;
 
 #[ORM\Entity(repositoryClass: IndividualTemporaryDeploymentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     order: ['id' => 'ASC'],
     paginationEnabled: false,
 )]
 class IndividualTemporaryDeployment
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -40,6 +44,12 @@ class IndividualTemporaryDeployment
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
     private ?string $destinationUnit = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {

@@ -3,13 +3,17 @@
 namespace App\Entity\Admin;
 
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Validator\Base64Image;
+use ApiPlatform\Metadata\Patch;
+use App\Dto\ResetPasswordInput;
 use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
+use App\State\AdminDataPersister;
 use ApiPlatform\Metadata\ApiResource;
+use App\State\ResetPasswordProcessor;
 use ApiPlatform\Metadata\GetCollection;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\Admin\AdminRepository;
 use App\Entity\Admin\AdminGlobalPermission;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +25,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
+    processor: AdminDataPersister::class,
     operations: [
         new GetCollection(
             normalizationContext: ['groups' => 'admin:collection'],
@@ -35,7 +41,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
         new Patch(
             denormalizationContext: ['groups' => 'admin:save'],
         ),
-        new Delete()
+        new Delete(),
+        new Post(
+            uriTemplate: '/admins/{id}/reset-password',
+            processor: ResetPasswordProcessor::class,
+            input: ResetPasswordInput::class,
+            read: false
+        )
     ],
     forceEager: false,
     paginationEnabled: false,
@@ -43,6 +55,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[UniqueEntity(fields: ['username'])]
 class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -64,6 +78,7 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
+    #[Assert\Length(min: 5)]
     #[Groups(['admin:save'])]
     private ?string $password = null;
 
@@ -91,6 +106,14 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: ApiToken::class, mappedBy: 'ownedBy', cascade: ['remove'], orphanRemoval: true)]
     private Collection $apiTokens;
+    
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['admin:collection', 'admin:read', 'admin:save'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['admin:collection', 'admin:read', 'admin:save'])]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {

@@ -5,16 +5,20 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\IndividualTemporaryGuestRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IndividualTemporaryGuestRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     order: ['id' => 'ASC'],
     paginationEnabled: false,
 )]
 class IndividualTemporaryGuest
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -39,6 +43,12 @@ class IndividualTemporaryGuest
     #[ORM\Column(length: 255)]
     #[Assert\Type('string')]
     private ?string $originUnit = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {

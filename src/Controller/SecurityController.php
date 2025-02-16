@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Dto\Admin\AdminDto;
+use App\Dto\ApiTokenDto;
 use App\Entity\Admin\Admin;
 use App\Service\ApiTokenService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +17,8 @@ class SecurityController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private ApiTokenService $apiTokenService
-    ) {}
+    ) {
+    }
 
     #[Route('/login', name: 'app_login', methods: ['POST'])]
     public function login(#[CurrentUser] Admin $admin = null): Response
@@ -30,9 +32,7 @@ class SecurityController extends AbstractController
         $apiToken = $this->apiTokenService->createToken($admin);
 
         return $this->json([
-            'token' => $apiToken->getToken(),
-            'expires_at' => $apiToken->getExpiresAt()?->format(\DateTime::ATOM),
-            'token_type' => 'Bearer',
+            ...ApiTokenDto::fromEntity($apiToken, 'Bearer')->toArray(),
             'admin' => AdminDto::fromEntity($admin),
         ], Response::HTTP_ACCEPTED);
     }

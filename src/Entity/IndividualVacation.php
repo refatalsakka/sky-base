@@ -10,11 +10,13 @@ use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\IndividualVacationRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IndividualVacationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'individualVacation:collection']),
@@ -28,6 +30,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 class IndividualVacation
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -56,6 +60,14 @@ class IndividualVacation
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['individualVacation:collection', 'individualVacation:read'])]
     private ?Individual $individual = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['individualVacation:collection', 'individualVacation:read'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['individualVacation:collection', 'individualVacation:read'])]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {

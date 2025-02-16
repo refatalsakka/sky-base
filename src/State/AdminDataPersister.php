@@ -2,24 +2,22 @@
 
 namespace App\State;
 
-use ApiPlatform\State\ProcessorInterface;
-use ApiPlatform\Metadata\Operation;
 use App\Entity\Admin\Admin;
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\ProcessorInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 
-#[AsDecorator('api_platform.doctrine.orm.state.persist_processor')]
 class AdminDataPersister implements ProcessorInterface
 {
     public function __construct(
-        private ProcessorInterface $innerProcessor,
+        #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
+        private ProcessorInterface $persistProcessor,
         private UserPasswordHasherInterface $passwordHasher,
-        private EntityManagerInterface $entityManager
     ) {
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Admin
     {
         if ($data instanceof Admin && $data->getPassword()) {
             $data->setPassword(
@@ -27,6 +25,6 @@ class AdminDataPersister implements ProcessorInterface
             );
         }
 
-        return $this->innerProcessor->process($data, $operation, $uriVariables, $context);
+        return $this->persistProcessor->process($data, $operation, $uriVariables, $context);
     }
 }

@@ -2,13 +2,17 @@
 
 namespace App\Entity\Admin;
 
-use App\Repository\Admin\ApiTokenRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\TimestampableTrait;
+use App\Repository\Admin\ApiTokenRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ApiTokenRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApiToken
 {
+    use TimestampableTrait;
+
     private const PERSONAL_ACCESS_TOKEN_PREFIX = 'tcp_';
 
     #[ORM\Id]
@@ -35,6 +39,12 @@ class ApiToken
     #[Assert\NotBlank()]
     #[Assert\Type('boolean')]
     private bool $valid = true;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(string $tokenType = self::PERSONAL_ACCESS_TOKEN_PREFIX)
     {

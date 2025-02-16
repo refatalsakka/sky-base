@@ -1,7 +1,3 @@
-##################
-# DOCKER_COMPOSE #
-##################
-
 APACHE_CONTAINER=apache
 
 .PHONY: build-dev	
@@ -20,16 +16,17 @@ build-prod:
 stop-prod:
 	docker compose stop
 
+.PHONY: apache
+apache:
+	docker compose exec -it $(APACHE_CONTAINER) bash
+
 .PHONY: clear-cache
 clear-cache:
-	docker compose exec $(APACHE_CONTAINER) php bin/console cache:clear
+	docker compose exec $(APACHE_CONTAINER) php bin/console cache:clear && \
+	docker compose exec $(APACHE_CONTAINER) php bin/console cache:warmup
 
-#################
-# DATA FIXTURES #
-#################
-
-.PHONY: data-dev
-data-dev:
+.PHONY: reset-dev
+reset-dev:
 	docker compose exec $(APACHE_CONTAINER) php bin/console doctrine:database:drop --force && \
 	docker compose exec $(APACHE_CONTAINER) php bin/console doctrine:database:create && \
 	docker compose exec $(APACHE_CONTAINER) sh -c "cd migrations && rm -rf *.php && cd .." && \

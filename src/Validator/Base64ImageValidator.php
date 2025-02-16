@@ -9,11 +9,7 @@ class Base64ImageValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof Base64Image) {
-            return;
-        }
-
-        if (!$value) {
+        if (!$constraint instanceof Base64Image || !$value) {
             return;
         }
 

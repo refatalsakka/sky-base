@@ -20,11 +20,11 @@ final class UnitVoter extends Voter
     public const VIEW_NCOS = 'ROLE_VIEW_NON_COMMISSIONED_OFFICERS';
     public const VIEW_ENLISTED = 'ROLE_VIEW_ENLISTED';
 
-
     public function __construct(
         private RequestStack $requestStack,
         private EntityManagerInterface $entityManager
-    ) {}
+    ) {
+    }
 
     protected function supports(string $attribute, mixed $subject): bool
     {

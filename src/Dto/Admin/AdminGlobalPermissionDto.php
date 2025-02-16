@@ -8,12 +8,13 @@ use Doctrine\Common\Collections\Collection;
 class AdminGlobalPermissionDto
 {
     public function __construct(
-        public int $id,
-        public int $adminId,
-        public string $username,
-        public int $roleId,
-        public string $roleName
-    ) {}
+        public readonly int $id,
+        public readonly int $adminId,
+        public readonly string $username,
+        public readonly int $roleId,
+        public readonly string $roleName
+    ) {
+    }
 
     public static function fromEntity(AdminGlobalPermission $permission): self
     {

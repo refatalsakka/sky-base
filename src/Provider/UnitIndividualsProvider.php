@@ -12,14 +12,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UnitIndividualsProvider implements ProviderInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ) {
     }
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): array|null
     {
         $unitId = $uriVariables['id'] ?? null;
         $militaryRankCode = $operation->getExtraProperties()['militaryRankCode'] ?? null;
@@ -32,7 +30,7 @@ class UnitIndividualsProvider implements ProviderInterface
         $unit = $this->entityManager->getRepository(Unit::class)->find($unitId);
 
         if (!$unit) {
-            throw new NotFoundHttpException('Unit not found.');
+            throw new NotFoundHttpException('Unit not found');
         }
 
         /** @var IndividualRepository $repository */

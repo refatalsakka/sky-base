@@ -3,9 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Put;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\IndividualVacation;
 use ApiPlatform\Metadata\ApiResource;
@@ -22,9 +19,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'individualLeaveReason:collection']),
         new Get(normalizationContext: ['groups' => 'individualLeaveReason:read']),
-        new Post(),
-        new Put(),
-        new Delete()
     ],
     order: ['reason' => 'ASC'],
     paginationEnabled: false,

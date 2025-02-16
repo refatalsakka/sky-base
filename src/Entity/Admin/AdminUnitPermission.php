@@ -10,11 +10,13 @@ use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use App\Entity\Traits\TimestampableTrait;
 use App\Validator\UniqueAdminUnitPermission;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\Admin\AdminUnitPermissionRepository;
 
 #[ORM\Entity(repositoryClass: AdminUnitPermissionRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -38,6 +40,8 @@ use App\Repository\Admin\AdminUnitPermissionRepository;
 #[UniqueAdminUnitPermission(groups: ['adminUnitPermission:save'])]
 class AdminUnitPermission
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -55,6 +59,14 @@ class AdminUnitPermission
     #[ORM\ManyToOne(inversedBy: 'adminUnitPermissions')]
     #[Groups(['adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read', 'admin:save'])]
     private ?Unit $unit = null;
+    
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['AdminRole:collection', 'AdminRole:read'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['AdminRole:collection', 'AdminRole:read'])]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {

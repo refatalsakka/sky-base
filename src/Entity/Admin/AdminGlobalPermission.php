@@ -9,11 +9,13 @@ use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use App\Entity\Traits\TimestampableTrait;
 use App\Validator\UniqueAdminGlobalPermission;
 use Symfony\Component\Serializer\Attribute\Groups;
 use App\Repository\Admin\AdminGlobalPermissionRepository;
 
 #[ORM\Entity(repositoryClass: AdminGlobalPermissionRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -37,6 +39,8 @@ use App\Repository\Admin\AdminGlobalPermissionRepository;
 #[UniqueAdminGlobalPermission(groups: ['adminGlobalPermission:save'])]
 class AdminGlobalPermission
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -50,6 +54,14 @@ class AdminGlobalPermission
     #[ORM\ManyToOne(inversedBy: 'adminGlobalPermissions')]
     #[Groups(['adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'admin:save'])]
     private ?AdminRole $role = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['adminGlobalPermission:collection', 'adminGlobalPermission:read'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['adminGlobalPermission:collection', 'adminGlobalPermission:read'])]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {

@@ -10,14 +10,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MilitaryRankProvider implements ProviderInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ) {
     }
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): array|null
     {
         $militaryRankCode = $operation->getExtraProperties()['militaryRankCode'] ?? null;
 

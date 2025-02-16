@@ -7,13 +7,14 @@ use App\Entity\Admin\Admin;
 class AdminDto
 {
     public function __construct(
-        public int $id,
-        public string $name,
-        public string $username,
-        public ?string $image,
-        public array $globalPermissions,
-        public array $unitPermissions,
-    ) {}
+        public readonly int $id,
+        public readonly string $name,
+        public readonly string $username,
+        public readonly ?string $image,
+        public readonly array $globalPermissions,
+        public readonly array $unitPermissions,
+    ) {
+    }
 
     public static function fromEntity(Admin $admin): self
     {

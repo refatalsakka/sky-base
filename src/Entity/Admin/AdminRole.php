@@ -42,7 +42,7 @@ class AdminRole
 
     #[ORM\Column(enumType: PermissionScope::class)]
     #[Assert\NotBlank()]
-    #[Assert\Type('string')]
+    #[Assert\Choice(choices: PermissionScope::VALUES)]
     #[Groups(['AdminRole:collection', 'AdminRole:read', 'adminGlobalPermission:collection', 'adminGlobalPermission:read', 'admin:collection', 'admin:read', 'adminUnitPermission:collection', 'adminUnitPermission:read'])]
     private ?PermissionScope $scope = null;
 

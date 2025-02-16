@@ -13,12 +13,14 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Provider\MilitaryRankProvider;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\IndividualRepository;
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IndividualRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -54,6 +56,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 class Individual
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -218,6 +222,14 @@ class Individual
 
     #[ORM\OneToOne(mappedBy: 'individual', cascade: ['persist', 'remove'])]
     private ?IndividualTemporaryDeployment $individualTemporaryDeployment = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {

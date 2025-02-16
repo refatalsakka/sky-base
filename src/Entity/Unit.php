@@ -12,6 +12,7 @@ use App\Repository\UnitRepository;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use App\Entity\Admin\AdminUnitPermission;
+use App\Entity\Traits\TimestampableTrait;
 use App\Provider\UnitIndividualsProvider;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UnitRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -48,7 +50,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new Get(
             normalizationContext: ['groups' => 'unit:read'],
         ),
-        new Post( ),
+        new Post(),
         new Put(),
         new Delete(
             validate: true,
@@ -62,6 +64,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[PreventUnitDeletionIfHasIndividuals(groups: ['unit:delete'])]
 class Unit
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -92,6 +96,14 @@ class Unit
      */
     #[ORM\OneToMany(targetEntity: AdminUnitPermission::class, mappedBy: 'unit', cascade: ['remove'], orphanRemoval: true)]
     private Collection $adminUnitPermissions;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['unit:read', 'unit:collection'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['unit:read', 'unit:collection'])]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {

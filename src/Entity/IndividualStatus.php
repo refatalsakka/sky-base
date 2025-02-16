@@ -22,9 +22,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'individualStatus:collection']),
         new Get(normalizationContext: ['groups' => 'individualStatus:read']),
-        new Post(),
-        new Put(),
-        new Delete()
     ],
     order: ['status' => 'ASC'],
     paginationEnabled: false,

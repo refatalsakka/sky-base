@@ -9,14 +9,15 @@ use Doctrine\Common\Collections\Collection;
 class AdminUnitPermissionDto
 {
     public function __construct(
-        public int $id,
-        public int $adminId,
-        public string $username,
-        public int $roleId,
-        public string $roleName,
-        public int $unitId,
-        public string $unitName
-    ) {}
+        public readonly int $id,
+        public readonly int $adminId,
+        public readonly string $username,
+        public readonly int $roleId,
+        public readonly string $roleName,
+        public readonly int $unitId,
+        public readonly string $unitName
+    ) {
+    }
 
     public static function fromEntity(AdminUnitPermission $permission): self
     {
