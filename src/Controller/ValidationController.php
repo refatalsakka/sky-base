@@ -15,7 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/validation-rules', methods: ['GET'])]
+
+#[Route('/api/validation-rules', methods: ['GET'])]
 class ValidationController extends AbstractController
 {
 

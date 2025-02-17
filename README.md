@@ -125,6 +125,13 @@ This will:
 
 ---
 
+## 📖 API Documentation
+
+SkyBase provides an OpenAPI-compliant API documentation that allows you to explore available endpoints, test requests, and view response structures.
+
+Access the API documentation here:
+➡️ [SkyBase API Docs](http://localhost:8200/api/docs)
+
 ## 📌 TODO List
 
 [View TODO.md](TODO.md)

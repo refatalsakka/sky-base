@@ -28,7 +28,7 @@ security:
             logout:
                 path: app_logout
         api:
-            pattern: ^/api/v1
+            pattern: ^/api
             stateless: true
             provider: app_user_provider
             access_token:
@@ -45,7 +45,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/api/v1/docs }
+        - { path: ^/api/docs }
         - { path: ^/logout, roles: IS_AUTHENTICATED_FULLY }
 
         # - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
