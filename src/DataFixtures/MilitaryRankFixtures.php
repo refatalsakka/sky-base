@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\MilitaryRank;
+use App\Entity\MilitarySubRank;
 use Symfony\Component\Yaml\Yaml;
-use App\Factory\MilitaryRankFactory;
-use App\Factory\MilitarySubRankFactory;
 use Doctrine\Persistence\ObjectManager;
 
 class MilitaryRankFixtures extends BaseFixture
@@ -23,18 +23,22 @@ class MilitaryRankFixtures extends BaseFixture
                 $enlisted
             ] as $militaryRank
         ) {
-            $militaryRankFactory = MilitaryRankFactory::createOne([
-                'rank' => $militaryRank['name'],
-                'code' => $militaryRank['code']
-            ]);
+            $militaryRankEntity = new MilitaryRank();
+            $militaryRankEntity->setRank($militaryRank['name']);
+            $militaryRankEntity->setCode($militaryRank['code']);
 
-            foreach($militaryRank['subs'] as $subRank) {
-                MilitarySubRankFactory::createOne([
-                    'subRank' => $subRank['name'],
-                    'code' => $subRank['code'],
-                    'militaryRank' => $militaryRankFactory
-                ]);
+            $manager->persist($militaryRankEntity);
+
+            foreach ($militaryRank['subs'] as $militarySubRank) {
+                $militarySubRankEntity = new MilitarySubRank();
+                $militarySubRankEntity->setSubRank($militarySubRank['name']);
+                $militarySubRankEntity->setCode($militarySubRank['code']);
+                $militarySubRankEntity->setMilitaryRank($militaryRankEntity);
+
+                $manager->persist($militarySubRankEntity);
             }
+
+            $manager->flush();
         }
     }
 

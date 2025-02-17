@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\SocialStatusFactory;
+use App\Entity\SocialStatus;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Persistence\ObjectManager;
 
@@ -13,8 +13,12 @@ class SocialStatusFixtures extends BaseFixture
         $socialStatuses = Yaml::parseFile($this->folder . '/socialStatuses.yaml')['social_statuses'];
 
         foreach ($socialStatuses as $socialStatus) {
-            SocialStatusFactory::createOne(['status' => $socialStatus]);
+            $statusEntity = new SocialStatus();
+            $statusEntity->setStatus($socialStatus);
+            $manager->persist($statusEntity);
         }
+
+        $manager->flush();
     }
 
     public static function getGroups(): array

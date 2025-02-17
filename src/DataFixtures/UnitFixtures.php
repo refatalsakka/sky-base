@@ -22,6 +22,6 @@ class UnitFixtures extends BaseFixture
 
     public static function getGroups(): array
     {
-        return ['dev', 'prod'];
+        return ['dev'];
     }
 }

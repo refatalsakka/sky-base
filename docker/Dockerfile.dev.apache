@@ -27,4 +27,6 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 # Install dependencies
 RUN composer install --no-scripts
 
-
+# Ensure necessary directories exist inside /var
+RUN mkdir -p /var/www/html/var/cache /var/www/html/var/log && \
+    chmod -R 777 /var/www/html/var

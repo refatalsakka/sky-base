@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\EducationLevelFactory;
+use App\Entity\EducationLevel;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Persistence\ObjectManager;
 
@@ -13,8 +13,12 @@ class EducationLevelFixtures extends BaseFixture
         $educationLevels = Yaml::parseFile($this->folder . '/educationLevel.yaml')['education_levels'];
 
         foreach ($educationLevels as $educationLevel) {
-            EducationLevelFactory::createOne(['level' => $educationLevel]);
+            $educationLevelEntity = new EducationLevel();
+            $educationLevelEntity->setLevel($educationLevel);
+            $manager->persist($educationLevelEntity);
         }
+
+        $manager->flush();
     }
 
     public static function getGroups(): array

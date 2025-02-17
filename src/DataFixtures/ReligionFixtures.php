@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\ReligionFactory;
+use App\Entity\Religion;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Persistence\ObjectManager;
 
@@ -13,8 +13,12 @@ class ReligionFixtures extends BaseFixture
         $religions = Yaml::parseFile($this->folder . '/religions.yaml')['religions'];
 
         foreach ($religions as $religion) {
-            ReligionFactory::createOne(['religion' => $religion]);
+            $religionEntity = new Religion();
+            $religionEntity->setReligion($religion);
+            $manager->persist($religionEntity);
         }
+
+        $manager->flush();
     }
 
     public static function getGroups(): array

@@ -2,8 +2,8 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\IndividualLeaveReasonFactory;
 use Symfony\Component\Yaml\Yaml;
+use App\Entity\IndividualLeaveReason;
 use Doctrine\Persistence\ObjectManager;
 
 class IndividualLeaveReasonFixtures extends BaseFixture
@@ -13,8 +13,12 @@ class IndividualLeaveReasonFixtures extends BaseFixture
         $leaveReasons = Yaml::parseFile($this->folder . '/individualLeaveReasons.yaml')['individual_leave_reasons'];
 
         foreach ($leaveReasons as $leaveReason) {
-            IndividualLeaveReasonFactory::createOne(['reason' => $leaveReason]);
+            $leaveReasonEntity = new IndividualLeaveReason();
+            $leaveReasonEntity->setReason($leaveReason);
+            $manager->persist($leaveReasonEntity);
         }
+
+        $manager->flush();
     }
 
     public static function getGroups(): array

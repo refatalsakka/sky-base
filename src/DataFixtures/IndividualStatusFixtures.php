@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\IndividualStatusFactory;
+use App\Entity\IndividualStatus;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Persistence\ObjectManager;
 
@@ -13,9 +13,12 @@ class IndividualStatusFixtures extends BaseFixture
         $individualStatuses = Yaml::parseFile($this->folder . '/individualStatuses.yaml')['individual_statuses'];
 
         foreach ($individualStatuses as $individualStatus) {
-            IndividualStatusFactory::createOne(['status' => $individualStatus]);
+            $statusEntity = new IndividualStatus();
+            $statusEntity->setStatus($individualStatus);
+            $manager->persist($statusEntity);
         }
-    }
+
+        $manager->flush();    }
 
     public static function getGroups(): array
     {

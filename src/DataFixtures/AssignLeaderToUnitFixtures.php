@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
+use Faker\Generator;
 use App\Repository\UnitRepository;
 use Doctrine\Persistence\ObjectManager;
 use App\Repository\IndividualRepository;
@@ -9,10 +11,13 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class AssignLeaderToUnitFixtures extends BaseFixture implements DependentFixtureInterface
 {
+    protected Generator $faker;
+
     public function __construct(
         private UnitRepository $unitRepository,
-        private IndividualRepository $individualRepository
+        private IndividualRepository $individualRepository,
     ) {
+        $this->faker = Factory::create();
         parent::__construct();
     }
 

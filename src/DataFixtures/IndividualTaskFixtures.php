@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\IndividualTaskFactory;
+use App\Entity\IndividualTask;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Persistence\ObjectManager;
 
@@ -13,8 +13,13 @@ class IndividualTaskFixtures extends BaseFixture
         $individualTasks = Yaml::parseFile($this->folder . '/individualTasks.yaml')['individual_tasks'];
 
         foreach ($individualTasks as $individualTask) {
-            IndividualTaskFactory::createOne(['task' => $individualTask]);
+            $taskEntity = new IndividualTask();
+            $taskEntity->setTask($individualTask);
+            $manager->persist($taskEntity);
         }
+
+        $manager->flush();
+
     }
 
     public static function getGroups(): array
