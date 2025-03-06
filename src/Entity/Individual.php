@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
 use ApiPlatform\Metadata\Delete;
@@ -12,6 +11,7 @@ use App\Entity\IndividualVacation;
 use ApiPlatform\Metadata\ApiResource;
 use App\Provider\MilitaryRankProvider;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use App\Repository\IndividualRepository;
 use App\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\Collection;
@@ -47,7 +47,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new Get(normalizationContext: ['groups' => 'individual:read']),
         new Post(),
-        new Put(),
+        new Patch(),
         new Delete()
     ],
     order: ['id' => 'ASC'],
