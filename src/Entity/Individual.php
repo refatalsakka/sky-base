@@ -4,14 +4,15 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
+use App\Validator\Base64Image;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\IndividualVacation;
 use ApiPlatform\Metadata\ApiResource;
 use App\Provider\MilitaryRankProvider;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
 use App\Repository\IndividualRepository;
 use App\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\Collection;
@@ -212,8 +213,8 @@ class Individual
     #[Groups(['individual:read'])]
     private ?Unit $unit = null;
 
-    #[ORM\Column(type: 'blob')]
-    #[Assert\NotBlank()]
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Base64Image]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private mixed $image = null;
 
