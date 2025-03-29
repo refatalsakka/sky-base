@@ -2,6 +2,11 @@
 
 namespace App\Entity;
 
+use App\Controller\IndividualRelationCountController;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Entity\Individual;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
@@ -17,6 +22,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ApiResource(
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'socialStatus:collection']),
+        new Get(normalizationContext: ['groups' => 'socialStatus:read']),
+        new Get(
+            uriTemplate: '/individual-social-status/{key}/count',
+            controller: IndividualRelationCountController::class,
+            name: 'individual_social_status_count',
+            read: false,
+            output: false,
+        ),
     ],
     order: ['status' => 'ASC'],
     paginationEnabled: false,
@@ -33,7 +46,7 @@ class SocialStatus
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['socialStatus:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
+    #[Groups(['socialStatus:collection', 'socialStatus:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?string $status = null;
 
     /**

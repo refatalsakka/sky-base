@@ -14,7 +14,6 @@ class UnitFixtures extends BaseFixture
 
         for ($i = 0; $i < count($militaryUnitNames); $i++) {
             UnitFactory::createOne([
-                'leader' => null,
                 'name' => $militaryUnitNames[$i],
             ]);
         }

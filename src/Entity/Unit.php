@@ -78,12 +78,6 @@ class Unit
     #[Groups(['unit:read', 'unit:collection', 'individual:read', 'adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
     private ?string $name = null;
 
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    #[Groups(['unit:read', 'unit:collection'])]
-    private ?Individual $leader = null;
-
     /**
      * @var Collection<int, Individual>
      */
@@ -126,26 +120,6 @@ class Unit
         $this->name = $name;
 
         return $this;
-    }
-
-    public function getLeader(): ?Individual
-    {
-        return $this->leader;
-    }
-
-    public function setLeader(?Individual $leader): static
-    {
-        $this->leader = $leader;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Individual>
-     */
-    public function getIndividuals(): Collection
-    {
-        return $this->individuals;
     }
 
     public function addIndividual(Individual $individual): static

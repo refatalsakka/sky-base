@@ -4,19 +4,29 @@ namespace App\Entity;
 
 use App\Entity\Individual;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\BloodTypeRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\IndividualRelationCountController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: BloodTypeRepository::class)]
 #[ApiResource(
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'bloodType:collection']),
+        new Get(normalizationContext: ['groups' => 'bloodType:read']),
+        new Get(
+            uriTemplate: '/individual-blood-type/{key}/count',
+            controller: IndividualRelationCountController::class,
+            name: 'individual_blood_type_count',
+            read: false,
+            output: false,
+        ),
     ],
     order: ['type' => 'ASC'],
     paginationEnabled: false,
@@ -33,7 +43,7 @@ class BloodType
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['bloodType:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
+    #[Groups(['bloodType:collection', 'bloodType:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?string $type = null;
 
     /**

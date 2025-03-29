@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Entity\Individual;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
@@ -9,14 +13,23 @@ use App\Repository\ReligionRepository;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\IndividualRelationCountController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ReligionRepository::class)]
 #[ApiResource(
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'religion:collection']),
+        new Get(normalizationContext: ['groups' => 'religion:read']),
+        new Get(
+            uriTemplate: '/individual-religion/{key}/count',
+            controller: IndividualRelationCountController::class,
+            name: 'individual_religion_count',
+            read: false,
+            output: false,
+        ),
     ],
     order: ['religion' => 'ASC'],
     paginationEnabled: false,
@@ -33,7 +46,7 @@ class Religion
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['religion:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
+    #[Groups(['religion:collection', 'religion:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?string $religion = null;
 
     /**

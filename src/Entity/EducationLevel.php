@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
 use App\Entity\Individual;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
@@ -9,14 +10,23 @@ use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\EducationLevelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\IndividualRelationCountController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: EducationLevelRepository::class)]
 #[ApiResource(
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'educationLevel:collection']),
+        new Get(normalizationContext: ['groups' => 'educationLevel:read']),
+        new Get(
+            uriTemplate: '/individual-education-level/{key}/count',
+            controller: IndividualRelationCountController::class,
+            name: 'individual_educationL_level_count',
+            read: false,
+            output: false,
+        ),
     ],
     order: ['level' => 'ASC'],
     paginationEnabled: false,
@@ -33,7 +43,7 @@ class EducationLevel
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['educationLevel:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
+    #[Groups(['educationLevel:collection', 'educationLevel:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?string $level = null;
 
     /**

@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use App\Entity\Individual;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Put;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,6 +15,7 @@ use App\Repository\IndividualStatusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Controller\IndividualRelationCountController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: IndividualStatusRepository::class)]
@@ -22,6 +23,16 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'individualStatus:collection']),
         new Get(normalizationContext: ['groups' => 'individualStatus:read']),
+        new Post(normalizationContext: ['groups' => 'individualStatus:save']),
+        new Patch(normalizationContext: ['groups' => 'individualStatus:save']),
+        new Get(
+            uriTemplate: '/individual-status/{key}/count',
+            controller: IndividualRelationCountController::class,
+            name: 'individual_status_count',
+            read: false,
+            output: false,
+        ),
+        new Delete(),
     ],
     order: ['status' => 'ASC'],
     paginationEnabled: false,
@@ -32,13 +43,13 @@ class IndividualStatus
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['individualStatus:collection', 'individualStatus:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
+    #[Groups(['individualStatus:collection', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['individualStatus:collection', 'individualStatus:read', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
+    #[Groups(['individualStatus:collection', 'individualStatus:read', 'individualStatus:save', 'individual:collection', 'individual:read', 'unit:read', 'unit:collection'])]
     private ?string $status = null;
 
     /**
