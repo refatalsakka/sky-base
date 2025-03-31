@@ -13,7 +13,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Controller\IndividualRelationCountController;
+use App\Controller\IndividualUnitRelationCountController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Controller\IndividualUnitMilitaryRankRelationCountController;
 
 #[ORM\Entity(repositoryClass: BloodTypeRepository::class)]
 #[ApiResource(
@@ -24,6 +26,20 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             uriTemplate: '/individual-blood-type/{key}/count',
             controller: IndividualRelationCountController::class,
             name: 'individual_blood_type_count',
+            read: false,
+            output: false,
+        ),
+        new Get(
+            uriTemplate: '/individual-blood-type/{key}/unit/{unitId}/count',
+            controller: IndividualUnitRelationCountController::class,
+            name: 'individual_unit_blood_type_count',
+            read: false,
+            output: false,
+        ),
+        new Get(
+            uriTemplate: '/individual-blood-type/{key}/unit/{unitId}/military-rank/{militaryRankId}/count',
+            controller: IndividualUnitMilitaryRankRelationCountController::class,
+            name: 'individual_unit_military_rank_blood_type_count',
             read: false,
             output: false,
         ),

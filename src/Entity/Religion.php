@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\Delete;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Post;
 use App\Entity\Individual;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ReligionRepository;
 use ApiPlatform\Metadata\GetCollection;
@@ -16,7 +16,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Controller\IndividualRelationCountController;
+use App\Controller\IndividualUnitRelationCountController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Controller\IndividualUnitMilitaryRankRelationCountController;
 
 #[ORM\Entity(repositoryClass: ReligionRepository::class)]
 #[ApiResource(
@@ -27,6 +29,20 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             uriTemplate: '/individual-religion/{key}/count',
             controller: IndividualRelationCountController::class,
             name: 'individual_religion_count',
+            read: false,
+            output: false,
+        ),
+        new Get(
+            uriTemplate: '/individual-religion/{key}/unit/{unitId}/count',
+            controller: IndividualUnitRelationCountController::class,
+            name: 'individual_unit_religion_count',
+            read: false,
+            output: false,
+        ),
+        new Get(
+            uriTemplate: '/individual-religion/{key}/unit/{unitId}/military-rank/{militaryRankId}/count',
+            controller: IndividualUnitMilitaryRankRelationCountController::class,
+            name: 'individual_unit_military_rank_religion_count',
             read: false,
             output: false,
         ),

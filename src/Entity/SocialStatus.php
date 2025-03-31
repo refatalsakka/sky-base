@@ -2,21 +2,23 @@
 
 namespace App\Entity;
 
-use App\Controller\IndividualRelationCountController;
-use ApiPlatform\Metadata\Delete;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Post;
 use App\Entity\Individual;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\SocialStatusRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\IndividualRelationCountController;
+use App\Controller\IndividualUnitRelationCountController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Controller\IndividualUnitMilitaryRankRelationCountController;
 
 #[ORM\Entity(repositoryClass: SocialStatusRepository::class)]
 #[ApiResource(
@@ -27,6 +29,20 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             uriTemplate: '/individual-social-status/{key}/count',
             controller: IndividualRelationCountController::class,
             name: 'individual_social_status_count',
+            read: false,
+            output: false,
+        ),
+        new Get(
+            uriTemplate: '/individual-social-status/{key}/unit/{unitId}/count',
+            controller: IndividualUnitRelationCountController::class,
+            name: 'individual_unit_social_status_count',
+            read: false,
+            output: false,
+        ),
+        new Get(
+            uriTemplate: '/individual-social-status/{key}/unit/{unitId}/military-rank/{militaryRankId}/count',
+            controller: IndividualUnitMilitaryRankRelationCountController::class,
+            name: 'individual_unit_military_rank_social_status_count',
             read: false,
             output: false,
         ),
