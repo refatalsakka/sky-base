@@ -69,13 +69,13 @@ class Unit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['unit:read', 'unit:collection', 'individual:read', 'adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['unit:read', 'unit:collection', 'individual:collection', 'individual:read', 'adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
     #[Assert\Type('string')]
-    #[Groups(['unit:read', 'unit:collection', 'individual:read', 'adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
+    #[Groups(['unit:read', 'unit:collection', 'individual:collection', 'individual:read', 'adminUnitPermission:collection', 'adminUnitPermission:read', 'admin:collection', 'admin:read'])]
     private ?string $name = null;
 
     /**

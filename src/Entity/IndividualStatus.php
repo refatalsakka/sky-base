@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use App\Entity\Individual;
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
+use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,10 +15,7 @@ use App\Repository\IndividualStatusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Controller\IndividualRelationCountController;
-use App\Controller\IndividualUnitRelationCountController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use App\Controller\IndividualUnitMilitaryRankRelationCountController;
 
 #[ORM\Entity(repositoryClass: IndividualStatusRepository::class)]
 #[ApiResource(
@@ -27,27 +24,6 @@ use App\Controller\IndividualUnitMilitaryRankRelationCountController;
         new Get(normalizationContext: ['groups' => 'individualStatus:read']),
         new Post(normalizationContext: ['groups' => 'individualStatus:save']),
         new Patch(normalizationContext: ['groups' => 'individualStatus:save']),
-        new Get(
-            uriTemplate: '/individual-status/{key}/count',
-            controller: IndividualRelationCountController::class,
-            name: 'individual_status_count',
-            read: false,
-            output: false,
-        ),
-        new Get(
-            uriTemplate: '/individual-status/{key}/unit/{unitId}/count',
-            controller: IndividualUnitRelationCountController::class,
-            name: 'individual_unit_status_count',
-            read: false,
-            output: false,
-        ),
-        new Get(
-            uriTemplate: '/individual-status/{key}/unit/{unitId}/military-rank/{militaryRankId}/count',
-            controller: IndividualUnitMilitaryRankRelationCountController::class,
-            name: 'individual_unit_military_rank_status_count',
-            read: false,
-            output: false,
-        ),
         new Delete(),
     ],
     order: ['status' => 'ASC'],

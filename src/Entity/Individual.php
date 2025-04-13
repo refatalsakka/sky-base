@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\IndividualVacation;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Provider\MilitaryRankProvider;
 use ApiPlatform\Metadata\GetCollection;
@@ -17,6 +18,7 @@ use App\Repository\IndividualRepository;
 use App\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -55,6 +57,16 @@ use Symfony\Component\Validator\Constraints as Assert;
     forceEager: false,
     paginationEnabled: false,
 )]
+#[ApiFilter(SearchFilter::class, properties: [
+    'unit' => 'exact',
+    'militaryRank' => 'exact',
+    'militarySubRank' => 'exact',
+    'task' => 'exact',
+    'status' => 'exact',
+    'bloodType' => 'exact',
+    'religion' => 'exact',
+    'socialStatus' => 'exact',
+])]
 class Individual
 {
     use TimestampableTrait;

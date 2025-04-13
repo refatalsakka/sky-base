@@ -3,25 +3,19 @@
 namespace App\Entity;
 
 use App\Entity\Individual;
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
+use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\OpenApi\Model\Operation;
-use ApiPlatform\OpenApi\Model\Parameter;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\IndividualTaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
-use App\Controller\IndividualRelationCountController;
-use App\Controller\IndividualUnitRelationCountController;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use App\Controller\IndividualUnitMilitaryRankRelationCountController;
-
 
 #[ORM\Entity(repositoryClass: IndividualTaskRepository::class)]
 #[ApiResource(
@@ -30,27 +24,6 @@ use App\Controller\IndividualUnitMilitaryRankRelationCountController;
         new Get(normalizationContext: ['groups' => 'individualTask:read']),
         new Post(normalizationContext: ['groups' => 'individualTask:save']),
         new Patch(normalizationContext: ['groups' => 'individualTask:save']),
-        new Get(
-            uriTemplate: '/individual-task/{key}/count',
-            controller: IndividualRelationCountController::class,
-            name: 'individual_task_count',
-            read: false,
-            output: false,
-        ),
-        new Get(
-            uriTemplate: '/individual-task/{key}/unit/{unitId}/count',
-            controller: IndividualUnitRelationCountController::class,
-            name: 'individual_unit_task_count',
-            read: false,
-            output: false,
-        ),
-        new Get(
-            uriTemplate: '/individual-task/{key}/unit/{unitId}/military-rank/{militaryRankId}/count',
-            controller: IndividualUnitMilitaryRankRelationCountController::class,
-            name: 'individual_unit_military_rank_task_count',
-            read: false,
-            output: false,
-        ),
         new Delete(),
     ],
     order: ['task' => 'ASC'],

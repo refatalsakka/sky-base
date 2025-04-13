@@ -3,46 +3,22 @@
 namespace App\Entity;
 
 use App\Entity\Individual;
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Get;
+use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\EducationLevelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
-use App\Controller\IndividualRelationCountController;
-use App\Controller\IndividualUnitRelationCountController;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use App\Controller\IndividualUnitMilitaryRankRelationCountController;
 
 #[ORM\Entity(repositoryClass: EducationLevelRepository::class)]
 #[ApiResource(
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'educationLevel:collection']),
         new Get(normalizationContext: ['groups' => 'educationLevel:read']),
-        new Get(
-            uriTemplate: '/individual-education-level/{key}/count',
-            controller: IndividualRelationCountController::class,
-            name: 'individual_educationL_level_count',
-            read: false,
-            output: false,
-        ),
-        new Get(
-            uriTemplate: '/individual-education-level/{key}/unit/{unitId}/count',
-            controller: IndividualUnitRelationCountController::class,
-            name: 'individual_unit_educationL_level_count',
-            read: false,
-            output: false,
-        ),
-        new Get(
-            uriTemplate: '/individual-education-level/{key}/unit/{unitId}/military-rank/{militaryRankId}/count',
-            controller: IndividualUnitMilitaryRankRelationCountController::class,
-            name: 'individual_unit_military_rank_educationL_level_count',
-            read: false,
-            output: false,
-        ),
     ],
     order: ['level' => 'ASC'],
     paginationEnabled: false,
