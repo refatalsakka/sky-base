@@ -16,6 +16,25 @@ class IndividualTaskRepository extends ServiceEntityRepository
         parent::__construct($registry, IndividualTask::class);
     }
 
+    public function findWithIndividualCount(?int $unitId = null, ?int $militaryRankId = null): array
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('t.id, t.task, COUNT(i.id) AS individualCount')
+            ->leftJoin('t.individuals', 'i')
+            ->groupBy('t.id')
+            ->orderBy('t.task', 'ASC');
+
+        if ($unitId !== null) {
+            $qb->andWhere('i.unit = :unitId')->setParameter('unitId', $unitId);
+        }
+
+        if ($militaryRankId !== null) {
+            $qb->andWhere('i.militaryRank = :militaryRankId')->setParameter('militaryRankId', $militaryRankId);
+        }
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
     //    /**
     //     * @return IndividualTask[] Returns an array of IndividualTask objects
     //     */

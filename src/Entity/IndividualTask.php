@@ -13,6 +13,7 @@ use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\IndividualTaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Controller\IndividualTaskStatsController;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -22,6 +23,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     operations: [
         new GetCollection(normalizationContext: ['groups' => 'individualTask:collection']),
         new Get(normalizationContext: ['groups' => 'individualTask:read']),
+        new GetCollection(
+            uriTemplate: '/individual-tasks/stats',
+            controller: IndividualTaskStatsController::class,
+            name: 'individual_task_stats',
+            normalizationContext: ['groups' => 'individualTask:collection'],
+            read: false,
+            output: false
+        ),
         new Post(normalizationContext: ['groups' => 'individualTask:save']),
         new Patch(normalizationContext: ['groups' => 'individualTask:save']),
         new Delete(),
