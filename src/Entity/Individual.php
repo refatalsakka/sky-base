@@ -212,9 +212,9 @@ class Individual
     private ?int $imprisonmentTimes = null;
 
     /**
-     * @var Collection<int, IndividualVacation>
+     * @var Collection<int, IndividualVacation>s
      */
-    #[ORM\OneToMany(targetEntity: IndividualVacation::class, mappedBy: 'individual')]
+    #[ORM\OneToMany(targetEntity: IndividualVacation::class, mappedBy: 'individual', cascade: ['remove'], orphanRemoval: true)]
     #[Assert\NotBlank()]
     #[Groups(['individual:read'])]
     private Collection $individualVacations;
