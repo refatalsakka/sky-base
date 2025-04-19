@@ -26,6 +26,7 @@ class ResetPasswordProcessor implements ProcessorInterface
             throw new \InvalidArgumentException('Invalid input');
         }
 
+        /** @var Admin */
         $admin = $this->entityManager->getRepository(Admin::class)->find($uriVariables['id']);
 
         if (!$admin) {

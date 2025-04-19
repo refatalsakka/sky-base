@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Entity\Individual;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
-use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UnitRepository;
@@ -50,7 +50,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new Get(
             normalizationContext: ['groups' => 'unit:read'],
         ),
-        new Post(),
+        new Patch(),
         new Put(),
         new Delete(
             validate: true,

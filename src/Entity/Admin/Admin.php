@@ -27,7 +27,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    processor: AdminDataPersister::class,
     operations: [
         new GetCollection(
             normalizationContext: ['groups' => 'admin:collection'],
@@ -36,9 +35,11 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
             normalizationContext: ['groups' => 'admin:read'],
         ),
         new Post(
+            processor: AdminDataPersister::class,
             denormalizationContext: ['groups' => 'admin:save'],
         ),
         new Patch(
+            processor: AdminDataPersister::class,
             denormalizationContext: ['groups' => 'admin:save'],
         ),
         new Delete(),
