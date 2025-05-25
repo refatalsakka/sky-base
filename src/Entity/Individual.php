@@ -244,6 +244,152 @@ class Individual
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $seniorityNumber = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $college = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $institute = null;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\Type('dateTime')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?\DateTimeInterface $graduationDate = null;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\Type('dateTime')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?\DateTimeInterface $serviceStartDate = null;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\Type('dateTime')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?\DateTimeInterface $currentRankPromotionDate = null;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\Type('dateTime')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?\DateTimeInterface $nextRankPromotionDate = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $weapon = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $administration = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $mainUnit = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $attachment = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $livingForce = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $subUnit = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $militaryQualification = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $civilianQualification = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $medicalLevel = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $governorate = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $securityStatus = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $literacyStatus = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $notes = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Type('string')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?string $category = null;
+
+    #[ORM\Column]
+    #[Assert\NotBlank()]
+    #[Assert\Type('integer')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?int $wivesCount = null;
+
+    #[ORM\Column]
+    #[Assert\NotBlank()]
+    #[Assert\Type('integer')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?int $childrenCount = null;
+
+    #[ORM\Column]
+    #[Assert\NotBlank()]
+    #[Assert\Type('float')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?float $weight = null;
+
+    #[ORM\Column]
+    #[Assert\NotBlank()]
+    #[Assert\Type('float')]
+    #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
+    private ?float $height = null;
+
     public function __construct()
     {
         $this->individualVacations = new ArrayCollection();
@@ -644,6 +790,306 @@ class Individual
         }
 
         $this->individualTemporaryDeployment = $individualTemporaryDeployment;
+
+        return $this;
+    }
+
+    public function getSeniorityNumber(): ?string
+    {
+        return $this->seniorityNumber;
+    }
+
+    public function setSeniorityNumber(string $seniorityNumber): static
+    {
+        $this->seniorityNumber = $seniorityNumber;
+
+        return $this;
+    }
+
+    public function getCollege(): ?string
+    {
+        return $this->college;
+    }
+
+    public function setCollege(string $college): static
+    {
+        $this->college = $college;
+
+        return $this;
+    }
+
+    public function getInstitute(): ?string
+    {
+        return $this->institute;
+    }
+
+    public function setInstitute(string $institute): static
+    {
+        $this->institute = $institute;
+
+        return $this;
+    }
+
+    public function getGraduationDate(): ?\DateTimeInterface
+    {
+        return $this->graduationDate;
+    }
+
+    public function setGraduationDate(?\DateTimeInterface $graduationDate): static
+    {
+        $this->graduationDate = $graduationDate;
+
+        return $this;
+    }
+
+    public function getServiceStartDate(): ?\DateTimeInterface
+    {
+        return $this->serviceStartDate;
+    }
+
+    public function setServiceStartDate(?\DateTimeInterface $serviceStartDate): static
+    {
+        $this->serviceStartDate = $serviceStartDate;
+
+        return $this;
+    }
+
+    public function getCurrentRankPromotionDate(): ?\DateTimeInterface
+    {
+        return $this->currentRankPromotionDate;
+    }
+
+    public function setCurrentRankPromotionDate(?\DateTimeInterface $currentRankPromotionDate): static
+    {
+        $this->currentRankPromotionDate = $currentRankPromotionDate;
+
+        return $this;
+    }
+
+    public function getNextRankPromotionDate(): ?\DateTimeInterface
+    {
+        return $this->nextRankPromotionDate;
+    }
+
+    public function setNextRankPromotionDate(?\DateTimeInterface $nextRankPromotionDate): static
+    {
+        $this->nextRankPromotionDate = $nextRankPromotionDate;
+
+        return $this;
+    }
+
+    public function getWeapon(): ?string
+    {
+        return $this->weapon;
+    }
+
+    public function setWeapon(string $weapon): static
+    {
+        $this->weapon = $weapon;
+
+        return $this;
+    }
+
+    public function getAdministration(): ?string
+    {
+        return $this->administration;
+    }
+
+    public function setAdministration(string $administration): static
+    {
+        $this->administration = $administration;
+
+        return $this;
+    }
+
+    public function getMainUnit(): ?string
+    {
+        return $this->mainUnit;
+    }
+
+    public function setMainUnit(string $mainUnit): static
+    {
+        $this->mainUnit = $mainUnit;
+
+        return $this;
+    }
+
+    public function getAttachment(): ?string
+    {
+        return $this->attachment;
+    }
+
+    public function setAttachment(string $attachment): static
+    {
+        $this->attachment = $attachment;
+
+        return $this;
+    }
+
+    public function getLivingForce(): ?string
+    {
+        return $this->livingForce;
+    }
+
+    public function setLivingForce(string $livingForce): static
+    {
+        $this->livingForce = $livingForce;
+
+        return $this;
+    }
+
+    public function getSubUnit(): ?string
+    {
+        return $this->subUnit;
+    }
+
+    public function setSubUnit(string $subUnit): static
+    {
+        $this->subUnit = $subUnit;
+
+        return $this;
+    }
+
+    public function getMilitaryQualification(): ?string
+    {
+        return $this->militaryQualification;
+    }
+
+    public function setMilitaryQualification(string $militaryQualification): static
+    {
+        $this->militaryQualification = $militaryQualification;
+
+        return $this;
+    }
+
+    public function getCivilianQualification(): ?string
+    {
+        return $this->civilianQualification;
+    }
+
+    public function setCivilianQualification(string $civilianQualification): static
+    {
+        $this->civilianQualification = $civilianQualification;
+
+        return $this;
+    }
+
+    public function getMedicalLevel(): ?string
+    {
+        return $this->medicalLevel;
+    }
+
+    public function setMedicalLevel(string $medicalLevel): static
+    {
+        $this->medicalLevel = $medicalLevel;
+
+        return $this;
+    }
+
+    public function getGovernorate(): ?string
+    {
+        return $this->governorate;
+    }
+
+    public function setGovernorate(string $governorate): static
+    {
+        $this->governorate = $governorate;
+
+        return $this;
+    }
+
+    public function getSecurityStatus(): ?string
+    {
+        return $this->securityStatus;
+    }
+
+    public function setSecurityStatus(string $securityStatus): static
+    {
+        $this->securityStatus = $securityStatus;
+
+        return $this;
+    }
+
+    public function getLiteracyStatus(): ?string
+    {
+        return $this->literacyStatus;
+    }
+
+    public function setLiteracyStatus(string $literacyStatus): static
+    {
+        $this->literacyStatus = $literacyStatus;
+
+        return $this;
+    }
+
+    public function getNotes(): ?string
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(string $notes): static
+    {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getWivesCount(): ?int
+    {
+        return $this->wivesCount;
+    }
+
+    public function setWivesCount(int $wivesCount): static
+    {
+        $this->wivesCount = $wivesCount;
+
+        return $this;
+    }
+
+    public function getChildrenCount(): ?int
+    {
+        return $this->childrenCount;
+    }
+
+    public function setChildrenCount(int $childrenCount): static
+    {
+        $this->childrenCount = $childrenCount;
+
+        return $this;
+    }
+
+    public function getWeight(): ?float
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(float $weight): static
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getHeight(): ?float
+    {
+        return $this->height;
+    }
+
+    public function setHeight(float $height): static
+    {
+        $this->height = $height;
 
         return $this;
     }
