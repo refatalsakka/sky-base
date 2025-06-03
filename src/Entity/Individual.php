@@ -244,20 +244,17 @@ class Individual
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $seniorityNumber = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $college = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $institute = null;
@@ -282,111 +279,93 @@ class Individual
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?\DateTimeInterface $nextRankPromotionDate = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $weapon = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $administration = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $mainUnit = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $attachment = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $livingForce = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $subUnit = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $militaryQualification = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $civilianQualification = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $medicalLevel = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $governorate = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $securityStatus = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $literacyStatus = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $notes = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $category = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank()]
-    #[Assert\Type('integer')]
+    #[Assert\Type('integer', nullable: true)]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?int $wivesCount = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank()]
-    #[Assert\Type('integer')]
+    #[Assert\Type('integer', nullable: true)]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?int $childrenCount = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank()]
-    #[Assert\Type('float')]
+    #[Assert\Type('float', nullable: true)]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?float $weight = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank()]
-    #[Assert\Type('float')]
+    #[Assert\Type('float', nullable: true)]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?float $height = null;
 
