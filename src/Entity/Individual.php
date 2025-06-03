@@ -349,23 +349,23 @@ class Individual
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?string $category = null;
 
-    #[ORM\Column]
-    #[Assert\Type('integer', nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Type('integer')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?int $wivesCount = null;
 
-    #[ORM\Column]
-    #[Assert\Type('integer', nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Type('integer')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?int $childrenCount = null;
 
-    #[ORM\Column]
-    #[Assert\Type('float', nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Type('float')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?float $weight = null;
 
-    #[ORM\Column]
-    #[Assert\Type('float', nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Type('float')]
     #[Groups(['individual:read', 'individual:collection', 'unit:read', 'unit:collection'])]
     private ?float $height = null;
 
